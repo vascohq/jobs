@@ -1,0 +1,14 @@
+{
+  "name": "level1",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "nodemon -e ts -w . -x ts-node ./src/index",
+    "build": "tsc",
+    "test": "jest"
+  },
+  "jest": {
+    "preset": "ts-jest",
+    "testEnvironment": "node"
+  }
+}
