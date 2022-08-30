@@ -1,12 +1,8 @@
 import { createContext, appRouter } from "./app";
 
-/**
- * ======================
- * DON'T MODIFY THIS FILE
- * ======================
- *
- * You completed this level when the tests below passes.
- */
+// =======================
+// DO NOT MODIFY THIS FILE
+// =======================
 
 describe("Level 1", () => {
   test("renders stats for a month", async () => {

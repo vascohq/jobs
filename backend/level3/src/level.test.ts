@@ -4,7 +4,7 @@ import { createContext, appRouter } from "./app";
 // DO NOT MODIFY THIS FILE
 // =======================
 
-describe("Level 2", () => {
+describe("Level 3", () => {
   test("renders stats for a month", async () => {
     const ctx = await createContext({} as any);
     const caller = appRouter.createCaller(ctx);
@@ -21,6 +21,8 @@ describe("Level 2", () => {
       churnRate: 0.1,
       downgradeRate: 0.1,
       upgradeRate: 0.1,
+      acquisitionTarget: 5000.0,
+      expansionTarget: 2000.0,
     });
   });
 
@@ -40,6 +42,8 @@ describe("Level 2", () => {
       churnRate: 0.1,
       downgradeRate: 0.1,
       upgradeRate: 0.1,
+      acquisitionTarget: 5000.0,
+      expansionTarget: 2000.0,
     });
   });
 });
