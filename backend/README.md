@@ -33,31 +33,44 @@ Don't hesitate to write shameless code at first, and then refactor it in the nex
 
 For higher levels we are interested in seeing code that is clean, extensible and robust, so don't overlook edge cases, use exceptions where needed.
 
+All levels shares the same data: `data/forecast.json`. Use it as you see fit to complete each level.
 ## Levels
 
 ### 1. Stats per month
 
-```json
+You are task to implement a procedure call to retrieve the forecast for a given month.
+
+```js
 // GET /trpc/targets.perMonth
 // Input: { month: 1, year: 2022 }
 {
-  "recurringRevenue": 105000.00,
+  "recurringRevenue": 120000.00,
   "churnRate": 0.1,
   "downgradeRate": 0.1,
   "upgradeRate": 0.1
 }
 ```
 
+**Additional specs**:
+
+- Inputs must be valid (e.g. month `13` is impossible)
+- Months without data should return an error
+
 ### 2. Stats per quarter
 
-```json
+You are task to implement another procedure call to retrieve the forecast now per quarter.
+
+- The `recurringRevenue` should be equal to the last month of the quarter
+- All rates should be calculated as a weighted average
+
+```js
 // GET /trpc/targets.perQuarter
 // Input: { quarter: 1, year: 2022 }
 {
   "recurringRevenue": 120000.00,
-  "churnRate": 0.1,
-  "downgradeRate": 0.1,
-  "upgradeRate": 0.1
+  "churnRate": 0.028,
+  "downgradeRate": 0.085,
+  "upgradeRate": 0.056
 }
 ```
 
