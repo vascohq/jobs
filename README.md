@@ -8,10 +8,10 @@
 
 ## Getting started
 
-|     | Profile  | Stack                        | Test                  |
-| --- | -------- | ---------------------------- | --------------------- |
-| ♟️   | Backend  | Typescript, tRPC, Serverless | [Start →](./backend)  |
-| 🧩   | Frontend | Typescript, React            | [Start →](./frontend) |
+|     | Profile  | Stack                        | Test                 |
+| --- | -------- | ---------------------------- | -------------------- |
+| ♟️   | Backend  | Typescript, tRPC, Serverless | [Start →](./backend) |
+| 🧩   | Frontend | Typescript, React            | Soon...              |
 ## Sending your results
 
 Once you are done, send your results to someone from Vasco (e.g. [@rothlis](https://github.com/rothlis)) or at career@vascohq.com.
