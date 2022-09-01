@@ -5,11 +5,11 @@ import { createContext, appRouter } from "./app";
 // =======================
 
 describe("Level 1", () => {
-  test("renders stats for a month", async () => {
+  test("renders targets for a month", async () => {
     const ctx = await createContext({} as any);
     const caller = appRouter.createCaller(ctx);
 
-    const perMonth = await caller.query("stats.perMonth", {
+    const perMonth = await caller.query("targets.perMonth", {
       month: 6,
       year: 2022,
     });

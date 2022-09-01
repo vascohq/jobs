@@ -17,7 +17,7 @@ function createRouter() {
 // Procedures
 // ==========
 
-const statsRouter = createRouter().query("perMonth", {
+const targetsRouter = createRouter().query("perMonth", {
   input: z.object({ month: z.number(), year: z.number() }),
   resolve: () => {
     return {}; // TODO
@@ -27,6 +27,6 @@ const statsRouter = createRouter().query("perMonth", {
 // Root Router
 // ==========
 
-export const appRouter = createRouter().merge("stats.", statsRouter);
+export const appRouter = createRouter().merge("targets.", targetsRouter);
 
 export type AppRouter = typeof appRouter;
