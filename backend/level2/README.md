@@ -33,9 +33,13 @@ churnQuarterlyRate = churnQuarterlyAmount / averageQuarterlyRecurringRevenue
 ```
 
 ```math
-churnQuarterlyAmount = recurringRevenue(m1) * churnRate(m1) + recurringRevenue(m2) * churnRate(m2) + recurringRevenue(m3) * churnRate(m3)
+churnQuarterlyAmount = recurringRevenue(m1-1) * churnRate(m1) + recurringRevenue(m2-1) * churnRate(m2) + recurringRevenue(m3-1) * churnRate(m3)
 ```
+
 ```math
 averageQuarterlyRecurringRevenue = (recurringRevenue(m1) + recurringRevenue(m2) + recurringRevenue(m3)) / 3
 ```
 
+> `(m1 - 1)` means the month previous to the first month of the quarter
+
+- Assume that the recurring revenue of December 2021 is `100000`

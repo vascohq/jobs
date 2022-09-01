@@ -17,12 +17,12 @@ describe("Level 3", () => {
     expect(perMonth).toMatchObject({
       month: 6,
       year: 2022,
-      recurringRevenue: 145000.0,
-      churnRate: 0.1,
-      downgradeRate: 0.1,
-      upgradeRate: 0.1,
-      acquisitionTarget: 5000.0,
-      expansionTarget: 2000.0,
+      recurringRevenue: 145000,
+      churnRate: 0.01,
+      downgradeRate: 0.03,
+      upgradeRate: 0.02,
+      acquisitionTarget: 5000,
+      expansionTarget: 2800,
     });
   });
 
@@ -38,12 +38,12 @@ describe("Level 3", () => {
     expect(perQuarter).toMatchObject({
       quarter: 2,
       year: 2022,
-      recurringRevenue: 145000.0,
-      churnRate: 0.1,
-      downgradeRate: 0.1,
-      upgradeRate: 0.1,
-      acquisitionTarget: 5000.0,
-      expansionTarget: 2000.0,
+      recurringRevenue: 145000,
+      churnRate: 0.028,
+      downgradeRate: 0.085,
+      upgradeRate: 0.056,
+      acquisitionTarget: 25000,
+      expansionTarget: 7900,
     });
   });
 });
