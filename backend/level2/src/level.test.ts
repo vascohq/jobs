@@ -36,10 +36,10 @@ describe("Level 2", () => {
     expect(perQuarter).toMatchObject({
       quarter: 2,
       year: 2022,
-      recurringRevenue: 145000.0,
-      churnRate: 0.1,
-      downgradeRate: 0.1,
-      upgradeRate: 0.1,
+      recurringRevenue: 145000,
+      churnRate: 0.028,
+      downgradeRate: 0.085,
+      upgradeRate: 0.056,
     });
   });
 });

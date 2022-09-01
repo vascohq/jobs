@@ -27,13 +27,16 @@ When you are done, see how to submit your challenge [here](../README.md#sending-
 
 ## Pointers
 
-The challenge is separated in levels and they become more complex over time, so you will probably have to re-use some code and adapt it to the new requirements. A good way to solve this is by writing [Clean Code](https://gist.github.com/wojteklu/73c6914cc446146b8b533c0988cf8d29), adding new layers of abstraction when they become necessary and possibly write tests so you don't break what you have already done.
+The challenge is separated in levels and they become more complex over time, so you will probably have to re-use some code and adapt it to the new requirements.
 
-Don't hesitate to write shameless code at first, and then refactor it in the next levels.
+- A good way to solve this is by writing [Clean Code](https://gist.github.com/wojteklu/73c6914cc446146b8b533c0988cf8d29), adding new layers of abstraction when they become necessary and possibly write tests so you don't break what you have already done.
+- Don't hesitate to write shameless code at first, and then refactor it in the next levels.
+- For higher levels we are interested in seeing code that is clean, extensible and robust, so don't overlook edge cases, use exceptions where needed.
+- Organize code and files as it was a big production application
 
-For higher levels we are interested in seeing code that is clean, extensible and robust, so don't overlook edge cases, use exceptions where needed.
+## Data
 
-All levels shares the same data: `data/forecast.json`. Use it as you see fit to complete each level.
+All levels shares the same data: `data/targets.json`. Use it as you see fit to complete each level.
 ## Levels
 
 ### 1. Stats per month
