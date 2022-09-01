@@ -1,3 +1,6 @@
+
+<img src="https://raw.githubusercontent.com/vascohq/.github/main/profile/github-jobs-banner.png" width="150" alt="Vasco" />
+
 # Vasco Engineering Challenges
 
 Want to join our engineering team? Complete one of the code challenges for us to look at!
