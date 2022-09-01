@@ -24,7 +24,7 @@ curl --request GET \
 
 ### Requirements
 
-- All the requirements of `perMonth`
+- All the requirements of previous levels
 - The `recurringRevenue` should be equal to the last month of the quarter
 - All rates should be calculated like so:
 
