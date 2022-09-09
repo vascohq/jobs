@@ -8,11 +8,11 @@
 
 ## Getting started
 
-|     | Profile  | Stack                        | Test                                                      |
-| --- | -------- | ---------------------------- | --------------------------------------------------------- |
-| ♟️   | Backend  | Typescript, tRPC, Serverless | [Start →](./backend)                                      |
-| 🧩   | Frontend | Typescript, React            | Soon...                                                   |
-| 🎨   | Design   | Figma, Design System         | [Start →](https://www.figma.com/file/1150045580326520430) |
+|     | Profile  | Stack                        | Test                                                                |
+| --- | -------- | ---------------------------- | ------------------------------------------------------------------- |
+| ♟️   | Backend  | Typescript, tRPC, Serverless | [Start →](./backend)                                                |
+| 🧩   | Frontend | Typescript, React            | Soon...                                                             |
+| 🎨   | Design   | Figma, Design System         | [Start →](https://www.figma.com/community/file/1150045580326520430) |
 ## Sending your results
 
 Once you are done, send your results to someone from Vasco (e.g. [@rothlis](https://github.com/rothlis)) or at career@vascohq.com.
