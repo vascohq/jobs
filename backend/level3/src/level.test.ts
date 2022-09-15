@@ -41,7 +41,7 @@ describe("Level 3", () => {
       recurringRevenue: 145000,
       churnRate: 0.028,
       downgradeRate: 0.085,
-      upgradeRate: 0.056,
+      upgradeRate: 0.057,
       acquisitionTarget: 25000,
       expansionTarget: 7900,
     });
