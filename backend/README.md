@@ -1,6 +1,6 @@
 # ♟️ Vasco Backend Challenge
 
-Welcome to Vasco's backend challenge. You are tasks to implement a few [tRPC](https://trpc.io/) procedures around Vasco's business requirements, although simplified. The API will be consumed in a revenue forecast UI similar to a Google Sheet.
+Welcome to Vasco's backend challenge. You are tasked to implement a few [tRPC](https://trpc.io/) procedures around Vasco's business requirements, although simplified. The API will be consumed in a revenue forecast UI similar to a Google Sheet.
 
 ## Instructions
 
