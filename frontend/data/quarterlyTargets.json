@@ -1,0 +1,46 @@
+[
+  {
+    "quarter": 1,
+    "year": 2023,
+    "beginningMRR": 80000,
+    "newBusinessMRR": 7500,
+    "churnRate": 6,
+    "grossChurnedMRR": -5048,
+    "expansionRate": 12,
+    "expansionMRR": 10095,
+    "endingMRR": 92548
+  },
+  {
+    "quarter": 2,
+    "year": 2023,
+    "beginningMRR": 92548,
+    "newBusinessMRR": 7500,
+    "churnRate": 6,
+    "grossChurnedMRR": -5816,
+    "expansionRate": 12,
+    "expansionMRR": 11631,
+    "endingMRR": 105863
+  },
+  {
+    "quarter": 3,
+    "year": 2023,
+    "beginningMRR": 105863,
+    "newBusinessMRR": 7500,
+    "churnRate": 6,
+    "grossChurnedMRR": -6631,
+    "expansionRate": 12,
+    "expansionMRR": 13261,
+    "endingMRR": 119994
+  },
+  {
+    "quarter": 4,
+    "year": 2023,
+    "beginningMRR": 119994,
+    "newBusinessMRR": 7500,
+    "churnRate": 6,
+    "grossChurnedMRR": -7496,
+    "expansionRate": 12,
+    "expansionMRR": 14991,
+    "endingMRR": 134990
+  }
+]

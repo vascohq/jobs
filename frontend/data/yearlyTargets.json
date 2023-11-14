@@ -1,0 +1,12 @@
+[
+  {
+    "year": 2023,
+    "beginningMRR": 80000,
+    "newBusinessMRR": 30000,
+    "churnRate": 24,
+    "grossChurnedMRR": -24990,
+    "expansionRate": 48,
+    "expansionMRR": 49979,
+    "endingMRR": 134990
+  }
+]

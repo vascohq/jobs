@@ -1,0 +1,134 @@
+[
+  {
+    "month": 1,
+    "year": 2023,
+    "beginningMRR": 80000,
+    "newBusinessMRR": 2500,
+    "churnRate": 2,
+    "grossChurnedMRR": -1600,
+    "expansionRate": 4,
+    "expansionMRR": 3200,
+    "endingMRR": 84100
+  },
+  {
+    "month": 2,
+    "year": 2023,
+    "beginningMRR": 84100,
+    "newBusinessMRR": 2500,
+    "churnRate": 2,
+    "grossChurnedMRR": -1682,
+    "expansionRate": 4,
+    "expansionMRR": 3364,
+    "endingMRR": 88282
+  },
+  {
+    "month": 3,
+    "year": 2023,
+    "beginningMRR": 88282,
+    "newBusinessMRR": 2500,
+    "churnRate": 2,
+    "grossChurnedMRR": -1766,
+    "expansionRate": 4,
+    "expansionMRR": 3531,
+    "endingMRR": 92548
+  },
+  {
+    "month": 4,
+    "year": 2023,
+    "beginningMRR": 92548,
+    "newBusinessMRR": 2500,
+    "churnRate": 2,
+    "grossChurnedMRR": -1851,
+    "expansionRate": 4,
+    "expansionMRR": 3702,
+    "endingMRR": 96899
+  },
+  {
+    "month": 5,
+    "year": 2023,
+    "beginningMRR": 96899,
+    "newBusinessMRR": 2500,
+    "churnRate": 2,
+    "grossChurnedMRR": -1938,
+    "expansionRate": 4,
+    "expansionMRR": 3876,
+    "endingMRR": 101337
+  },
+  {
+    "month": 6,
+    "year": 2023,
+    "beginningMRR": 101337,
+    "newBusinessMRR": 2500,
+    "churnRate": 2,
+    "grossChurnedMRR": -2027,
+    "expansionRate": 4,
+    "expansionMRR": 4053,
+    "endingMRR": 105863
+  },
+  {
+    "month": 7,
+    "year": 2023,
+    "beginningMRR": 105863,
+    "newBusinessMRR": 2500,
+    "churnRate": 2,
+    "grossChurnedMRR": -2117,
+    "expansionRate": 4,
+    "expansionMRR": 4235,
+    "endingMRR": 110481
+  },
+  {
+    "month": 8,
+    "year": 2023,
+    "beginningMRR": 110481,
+    "newBusinessMRR": 2500,
+    "churnRate": 2,
+    "grossChurnedMRR": -2210,
+    "expansionRate": 4,
+    "expansionMRR": 4419,
+    "endingMRR": 115190
+  },
+  {
+    "month": 9,
+    "year": 2023,
+    "beginningMRR": 115190,
+    "newBusinessMRR": 2500,
+    "churnRate": 2,
+    "grossChurnedMRR": -2304,
+    "expansionRate": 4,
+    "expansionMRR": 4608,
+    "endingMRR": 119994
+  },
+  {
+    "month": 10,
+    "year": 2023,
+    "beginningMRR": 119994,
+    "newBusinessMRR": 2500,
+    "churnRate": 2,
+    "grossChurnedMRR": -2400,
+    "expansionRate": 4,
+    "expansionMRR": 4996,
+    "endingMRR": 124894
+  },
+  {
+    "month": 11,
+    "year": 2023,
+    "beginningMRR": 124894,
+    "newBusinessMRR": 2500,
+    "churnRate": 2,
+    "grossChurnedMRR": -2498,
+    "expansionRate": 4,
+    "expansionMRR": 5196,
+    "endingMRR": 129892
+  },
+  {
+    "month": 12,
+    "year": 2023,
+    "beginningMRR": 129892,
+    "newBusinessMRR": 2500,
+    "churnRate": 2,
+    "grossChurnedMRR": -2598,
+    "expansionRate": 4,
+    "expansionMRR": 5196,
+    "endingMRR": 134990
+  }
+]
