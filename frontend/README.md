@@ -66,11 +66,11 @@ quarterlyEndingMRR = endingMRR(m3)
 ---
 
 ```math
-quarterlyChurnedMRR = beginningMRR(m1-1) * churnRate(m1) + beginningMRR(m2-1) * churnRate(m2) + beginningMRR(m3-1) * churnRate(m3)
+quarterlyChurnedMRR = beginningMRR(m1) * churnRate(m1) + beginningMRR(m2) * churnRate(m2) + beginningMRR(m3) * churnRate(m3)
 ```
 
 ```math
-quarterlyExpansionMRR = beginningMRR(m1-1) * expansionRate(m1) + beginningMRR(m2-1) * expansionRate(m2) + beginningMRR(m3-1) * expansionRate(m3)
+quarterlyExpansionMRR = beginningMRR(m1) * expansionRate(m1) + beginningMRR(m2) * expansionRate(m2) + beginningMRR(m3) * expansionRate(m3)
 ```
 
 ```math
