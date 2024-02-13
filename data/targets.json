@@ -1,0 +1,98 @@
+[
+  {
+    "month": 1,
+    "year": 2022,
+    "recurringRevenue": 105000,
+    "churnRate": 1,
+    "downgradeRate": 3,
+    "upgradeRate": 2
+  },
+  {
+    "month": 4,
+    "year": 2022,
+    "recurringRevenue": 135000,
+    "churnRate": 1,
+    "downgradeRate": 3,
+    "upgradeRate": 2
+  },
+  {
+    "month": 2,
+    "year": 2022,
+    "recurringRevenue": 110000,
+    "churnRate": 1,
+    "downgradeRate": 3,
+    "upgradeRate": 2
+  },
+  {
+    "month": 5,
+    "year": 2022,
+    "recurringRevenue": 140000,
+    "churnRate": 1,
+    "downgradeRate": 3,
+    "upgradeRate": 2
+  },
+  {
+    "month": 6,
+    "year": 2022,
+    "recurringRevenue": 145000,
+    "churnRate": 1,
+    "downgradeRate": 3,
+    "upgradeRate": 2
+  },
+  {
+    "month": 7,
+    "year": 2022,
+    "recurringRevenue": 155000,
+    "churnRate": 1,
+    "downgradeRate": 3,
+    "upgradeRate": 2
+  },
+  {
+    "month": 8,
+    "year": 2022,
+    "recurringRevenue": 160000,
+    "churnRate": 1,
+    "downgradeRate": 3,
+    "upgradeRate": 2
+  },
+  {
+    "month": 9,
+    "year": 2022,
+    "recurringRevenue": 175000,
+    "churnRate": 1,
+    "downgradeRate": 3,
+    "upgradeRate": 2
+  },
+  {
+    "month": 3,
+    "year": 2022,
+    "recurringRevenue": 120000,
+    "churnRate": 1,
+    "downgradeRate": 3,
+    "upgradeRate": 2
+  },
+  {
+    "month": 10,
+    "year": 2022,
+    "recurringRevenue": 180000,
+    "churnRate": 1,
+    "downgradeRate": 3,
+    "upgradeRate": 2
+  },
+  {
+    "month": 11,
+    "year": 2022,
+    "recurringRevenue": 190000,
+    "churnRate": 1,
+    "downgradeRate": 3,
+    "upgradeRate": 2
+  },
+  {
+    "month": 12,
+    "year": 2022,
+    "recurringRevenue": 200000,
+    "churnRate": 1,
+    "downgradeRate": 3,
+    "upgradeRate": 2
+  }
+]
