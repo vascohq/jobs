@@ -1,5 +1,6 @@
 {
   "name": "vasco-frontend-challenge",
+  "description": "Frontend challenge for Vasco",
   "private": true,
   "version": "0.0.0",
   "type": "module",
