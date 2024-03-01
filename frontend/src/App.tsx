@@ -1,15 +1,18 @@
-import "./App.css";
+import { logo } from "./App.module.css";
 import vascoLogo from "./assets/vasco.svg";
+import OrganizationTargetsPage from "./pages/OrganizationTargetsPage";
 
 function App() {
   return (
-    <div className="App">
-      <div>
-        <img src={vascoLogo} className="logo vasco" alt="Vasco logo" />
-      </div>
-      <h1>Vasco Frontend Challenge</h1>
-      <p>Good luck and have fun!</p>
-    </div>
+    <>
+      <header>
+        <img src={vascoLogo} className={logo} alt="Vasco logo" />
+        <h1>Vasco Frontend Challenge</h1>
+      </header>
+      <main>
+        <OrganizationTargetsPage />
+      </main>
+    </>
   );
 }
 

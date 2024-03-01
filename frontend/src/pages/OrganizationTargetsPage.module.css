@@ -1,0 +1,70 @@
+.tableOverflowContainer {
+  padding-bottom: 0.5em;
+  width: 100%;
+  overflow-x: auto;
+}
+
+.tableTargets {
+  border-collapse: separate;
+  border-spacing: 0;
+  table-layout: fixed;
+  white-space: nowrap;
+
+  :is(caption) {
+    border-top: 1px solid var(--var-color-borders);
+    text-align: left;
+
+    :is(div) {
+      position: sticky;
+      left: 0;
+      padding: 0.5em;
+      width: fit-content;
+      font-weight: bold;
+      font-size: 1.3em;
+    }
+  }
+
+  :is(td) {
+    border-top: 1px solid var(--var-color-borders);
+    /* position: relative; */
+    padding: 0.4em 0.5em;
+    min-width: 7em;
+    text-align: right;
+  }
+
+  th:first-child {
+    position: sticky;
+    left: 0;
+    border-top: 1px solid var(--var-color-borders);
+    border-right: 2px solid var(--var-color-borders);
+    background-color: var(--var-color-background);
+    padding: 0.5em 1em;
+    min-width: 10em;
+    font-weight: normal;
+    text-align: left;
+  }
+
+  thead th {
+    border-top: 1px solid var(--var-color-borders);
+    background-color: invert(var(--var-color-gray-50));
+    padding: 0.2em 0.5em;
+    text-align: right;
+  }
+}
+
+.editableCell {
+  color: var(--var-color-primary);
+}
+
+@media (prefers-color-scheme: light) {
+  .tableTargets {
+    th:first-child {
+      clip-path: inset(0px -15px 0px -15px);
+      box-shadow: 0 0 15px 5px var(--var-color-borders);
+    }
+  }
+
+  .editableCell {
+    background-color: rgb(from var(--var-color-primary) r g b / 0.1);
+  }
+}

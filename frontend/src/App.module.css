@@ -1,0 +1,24 @@
+header {
+  display: flex;
+  align-items: center;
+
+  :is(h1) {
+    margin: 0;
+    font-size: 2.5em;
+    line-height: 1.1;
+  }
+
+  .logo {
+    will-change: filter;
+    padding: 1.5em;
+    height: 3em;
+  }
+
+  .logo:hover {
+    filter: drop-shadow(0 0 2em #646cffaa);
+  }
+}
+
+main {
+  margin: 1em;
+}
