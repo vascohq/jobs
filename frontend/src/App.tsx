@@ -1,6 +1,5 @@
-import { useState } from "react";
-import vascoLogo from "./assets/vasco.svg";
 import "./App.css";
+import vascoLogo from "./assets/vasco.svg";
 
 function App() {
   return (
