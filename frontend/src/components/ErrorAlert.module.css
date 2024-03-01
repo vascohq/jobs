@@ -1,0 +1,8 @@
+.errorContainer {
+  border: 1px solid #edd;
+  background-color: #fee;
+  padding: 3em;
+  width: fit-content;
+  height: fit-content;
+  color: #a66;
+}
