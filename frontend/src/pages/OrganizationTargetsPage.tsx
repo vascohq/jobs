@@ -6,18 +6,21 @@ import { useFetch } from "../hooks/use-fetch";
 import {
   cellCurrentlyEdited,
   editableCell,
+  summaryCell,
   tableOverflowContainer,
   tableTargets,
 } from "./OrganizationTargetsPage.module.css";
 import {
-  MonthlyTarget,
-  OrganizationTargets,
+  MonthlyMMRTargets,
+  MonthlyOrQuarterMMRTargets,
+  OrganizationMMRTargets,
+  isMonthlyTarget,
   targetKey,
   useTargetsComputationReducer,
 } from "./organization-targets";
 
 export default function OrganizationTargetsPage() {
-  const query = useFetch<OrganizationTargets>("monthlyTargets.json");
+  const query = useFetch<MonthlyMMRTargets[]>("monthlyTargets.json");
 
   return (
     <FetchLoader {...query}>
@@ -26,7 +29,7 @@ export default function OrganizationTargetsPage() {
   );
 }
 
-function OrganizationTargetsTable(props: { data: OrganizationTargets }) {
+function OrganizationTargetsTable(props: { data: MonthlyMMRTargets[] }) {
   const [data, dispatch] = useTargetsComputationReducer(props.data);
 
   return (
@@ -39,7 +42,14 @@ function OrganizationTargetsTable(props: { data: OrganizationTargets }) {
           <tr>
             <th></th>
             {data.map((target) => (
-              <th key={targetKey(target)}>{formatter.monthYear(target)}</th>
+              <th
+                key={targetKey(target)}
+                className={clsx({ [summaryCell]: !isMonthlyTarget(target) })}
+              >
+                {isMonthlyTarget(target)
+                  ? formatter.monthYear(target)
+                  : `Q${target.quarter}`}
+              </th>
             ))}
           </tr>
         </thead>
@@ -48,35 +58,50 @@ function OrganizationTargetsTable(props: { data: OrganizationTargets }) {
             rowHeader="Beginning MRR"
             data={data}
             cell={(target) => formatter.money(target.beginningMRR)}
+            cellMode={(target) =>
+              isMonthlyTarget(target) ? "standard" : "summary"
+            }
           />
           <TableRow
             rowHeader="New Business MRR"
             data={data}
             cell={(target) => formatter.money(target.newBusinessMRR)}
-            editable
-            onCellChange={(target, value) =>
+            cellMode={(target) =>
+              isMonthlyTarget(target) ? "editable" : "summary"
+            }
+            onCellChange={(target, value) => {
+              if (!isMonthlyTarget(target)) return;
               dispatch({
                 type: "updateNewBusinessMRR",
                 month: target.month,
                 year: target.year,
                 value: value == undefined ? 0 : parseEditableCellNumber(value),
-              })
-            }
+              });
+            }}
           />
           <TableRow
             rowHeader="Churn Rate"
             data={data}
             cell={(target) => formatter.percent(target.churnRate / 100)}
+            cellMode={(target) =>
+              isMonthlyTarget(target) ? "standard" : "summary"
+            }
           />
           <TableRow
             rowHeader="Expansion Rate"
             data={data}
             cell={(target) => formatter.percent(target.expansionRate / 100)}
+            cellMode={(target) =>
+              isMonthlyTarget(target) ? "standard" : "summary"
+            }
           />
           <TableRow
             rowHeader="Ending MRR"
             data={data}
             cell={(target) => formatter.money(target.endingMRR)}
+            cellMode={(target) =>
+              isMonthlyTarget(target) ? "standard" : "summary"
+            }
           />
         </tbody>
       </table>
@@ -84,18 +109,23 @@ function OrganizationTargetsTable(props: { data: OrganizationTargets }) {
   );
 }
 
+type CellMode = "standard" | "editable" | "summary";
+
 function TableRow({
   rowHeader,
   data,
   cell,
-  editable,
+  cellMode,
   onCellChange,
 }: {
   rowHeader: ReactNode;
-  data: OrganizationTargets;
-  cell: (target: MonthlyTarget) => ReactNode;
-  editable?: boolean;
-  onCellChange?: (target: MonthlyTarget, value: string | undefined) => unknown;
+  data: OrganizationMMRTargets;
+  cell: (target: MonthlyOrQuarterMMRTargets) => ReactNode;
+  cellMode?: (target: MonthlyOrQuarterMMRTargets) => CellMode;
+  onCellChange?: (
+    target: MonthlyOrQuarterMMRTargets,
+    value: string | undefined,
+  ) => unknown;
 }) {
   return (
     <tr>
@@ -103,7 +133,7 @@ function TableRow({
       {data?.map((target) => (
         <TableCell
           key={targetKey(target)}
-          editable={editable}
+          cellMode={cellMode?.(target) ?? "standard"}
           onChange={(value) => onCellChange?.(target, value)}
         >
           {cell(target)}
@@ -114,11 +144,11 @@ function TableRow({
 }
 
 function TableCell({
-  editable,
+  cellMode,
   onChange,
   children,
 }: PropsWithChildren<{
-  editable?: boolean;
+  cellMode: CellMode;
   onChange?: (value: string | undefined) => unknown;
 }>) {
   const [currentlyEdited, setCurrentlyEdited] = useState(false);
@@ -126,10 +156,11 @@ function TableCell({
     /** I chose a contenteditable here for simplicity, but ideally which should have a better component with an overlay input number */
     <td
       className={clsx({
-        [editableCell]: editable,
+        [editableCell]: cellMode === "editable",
+        [summaryCell]: cellMode === "summary",
         [cellCurrentlyEdited]: currentlyEdited,
       })}
-      contentEditable={editable}
+      contentEditable={cellMode === "editable"}
       suppressContentEditableWarning
       onBlur={(e) => {
         onChange?.(e.currentTarget.textContent || undefined);

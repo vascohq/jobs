@@ -1,7 +1,6 @@
 :root {
   --var-color-background: #242424;
   --var-color-primary: #0350fe;
-  --var-color-gray-50: #f6f7f8;
   --var-color-borders: #dddfe4;
 
   background-color: var(--var-color-background);
@@ -59,6 +58,7 @@ button:focus-visible {
 @media (prefers-color-scheme: light) {
   :root {
     --var-color-background: #ffffff;
+    --var-color-gray-50: #f6f7f8;
     color: #213547;
   }
   a:hover {

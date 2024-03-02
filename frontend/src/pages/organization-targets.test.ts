@@ -1,6 +1,6 @@
-import { computeTargets, targetSorter } from "./organization-targets";
+import { computeTargets, monthlyTargetSorter } from "./organization-targets";
 
-describe("targetSorter", () => {
+describe("monthlyTargetSorter", () => {
   test("should sort the monthly targets by year and month", () => {
     const a = { month: 1, year: 2021 };
     const b = { month: 2, year: 2021 };
@@ -10,7 +10,7 @@ describe("targetSorter", () => {
     const f = { month: 2, year: 2022 };
     const monthlyTargets = [f, e, d, c, b, a];
 
-    const result = monthlyTargets.sort(targetSorter);
+    const result = monthlyTargets.sort(monthlyTargetSorter);
 
     expect(result).toEqual([c, d, a, b, e, f]);
   });
@@ -165,10 +165,31 @@ describe("computeTargets", () => {
       targets[0],
       targets[1],
       targets[2],
+      {
+        quarter: 1,
+        year: 2023,
+        beginningMRR: 80000,
+        newBusinessMRR: 7500,
+        churnRate: 6,
+        expansionRate: 12,
+        expansionMRR: 10095,
+        endingMRR: 92548,
+      },
       targets[3],
       targets[4],
       {
         ...targets[5],
+        endingMRR: 105864,
+      },
+      {
+        quarter: 2,
+        year: 2023,
+        beginningMRR: 92548,
+        newBusinessMRR: 7500,
+        churnRate: 6,
+        expansionRate: 12,
+        expansionMRR: 11631,
+        // endingMRR: 105863,
         endingMRR: 105864,
       },
       {
@@ -182,6 +203,18 @@ describe("computeTargets", () => {
       {
         ...targets[8],
         beginningMRR: 115191,
+        endingMRR: 119995,
+      },
+      {
+        quarter: 3,
+        year: 2023,
+        // beginningMRR: 105863,
+        beginningMRR: 105864,
+        newBusinessMRR: 7500,
+        churnRate: 6,
+        expansionRate: 12,
+        expansionMRR: 13261,
+        // endingMRR: 119994,
         endingMRR: 119995,
       },
       {
@@ -201,10 +234,22 @@ describe("computeTargets", () => {
         beginningMRR: 129893,
         endingMRR: 134991,
       },
+      {
+        quarter: 4,
+        year: 2023,
+        // beginningMRR: 119994,
+        beginningMRR: 119995,
+        newBusinessMRR: 7500,
+        churnRate: 6,
+        expansionRate: 12,
+        expansionMRR: 14991,
+        // endingMRR: 134990,
+        endingMRR: 134991,
+      },
     ]);
   });
 
-  it("should compute the targets with override", async () => {
+  it("should compute the targets with override and no quarter", async () => {
     const targets = [
       {
         month: 1,

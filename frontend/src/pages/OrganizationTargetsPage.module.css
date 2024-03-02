@@ -46,7 +46,7 @@
 
   thead th {
     border-top: 1px solid var(--var-color-borders);
-    background-color: invert(var(--var-color-gray-50));
+    background-color: var(--var-color-gray-50);
     padding: 0.2em 0.5em;
     text-align: right;
   }
@@ -62,6 +62,13 @@
 
 .cellCurrentlyEdited {
   font-style: italic;
+}
+
+.summaryCell {
+  border-right: 1px solid var(--var-color-borders);
+  border-left: 1px solid var(--var-color-borders);
+  background-color: var(--var-color-gray-50);
+  font-weight: bold;
 }
 
 @media (prefers-color-scheme: light) {
