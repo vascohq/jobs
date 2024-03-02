@@ -1,6 +1,6 @@
 import react from "@vitejs/plugin-react";
-import { defineConfig } from "vite";
 import mix from "vite-plugin-mix";
+import { defineConfig } from "vitest/config";
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -11,4 +11,7 @@ export default defineConfig({
       handler: "./api.ts",
     }),
   ],
+  test: {
+    globals: true,
+  },
 });

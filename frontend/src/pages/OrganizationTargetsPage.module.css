@@ -54,6 +54,14 @@
 
 .editableCell {
   color: var(--var-color-primary);
+
+  :is(br) {
+    display: none;
+  }
+}
+
+.cellCurrentlyEdited {
+  font-style: italic;
 }
 
 @media (prefers-color-scheme: light) {
