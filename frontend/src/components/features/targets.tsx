@@ -17,7 +17,7 @@ interface MonthlyTarget {
 // TODO Avoid as many loops as possible,
 // and keep it readable.
 function normalizeMonthlyTargets(data: MonthlyTarget[]) {
-  // Using a Mao to guarantee the iteration order when mapping in JSX.
+  // Using a Map to guarantee the iteration order when mapping in JSX.
   const normalizedData = new Map<
     keyof Omit<MonthlyTarget, "year">,
     { id: string; value: number | string }[]
