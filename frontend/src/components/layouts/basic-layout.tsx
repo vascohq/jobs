@@ -1,5 +1,5 @@
-import { type PropsWithChildren } from 'react';
-import { Box, VStack } from '@chakra-ui/react';
+import { type PropsWithChildren } from "react";
+import { Box, VStack } from "@chakra-ui/react";
 
 export function Layout({ children }: PropsWithChildren) {
   return (

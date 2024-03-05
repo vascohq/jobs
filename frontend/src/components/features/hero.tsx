@@ -1,4 +1,4 @@
-import vascoLogo from '../../assets/vasco.svg';
+import vascoLogo from "../../assets/vasco.svg";
 
 export function Hero() {
   return (
