@@ -43,7 +43,7 @@ function normalizeMonthlyTargets(data: MonthlyTarget[]) {
       // we omit the year row in the normalizedData Map
       if (!isYear) {
         const value = monthlyTarget[key];
-        // Need to create IDs I can use when mapping
+        // Need to create unique IDs I can use when mapping
         // the data in JSX.
         // Using underscore here because some values
         // are negative numbers.
