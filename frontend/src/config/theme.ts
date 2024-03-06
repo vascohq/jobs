@@ -2,7 +2,7 @@ import {
   ChakraBaseProvider,
   extendBaseTheme,
   theme as chakraTheme,
-} from '@chakra-ui/react';
+} from "@chakra-ui/react";
 
 // Why ChakraBaseProvider?
 // https://chakra-ui.com/getting-started#chakrabaseprovider
@@ -22,22 +22,25 @@ const { Button, Table } = chakraTheme.components;
 const theme = extendBaseTheme({
   colors: {
     brand: {
-      primary: '#0350FE',
+      primary: "#0350FE",
     },
     gray: {
-      '50': '#F6F7F8',
-      '100': '#EEEFF2',
-      '200': '#DDDFE4',
+      "50": "#F6F7F8",
+      "100": "#EEEFF2",
+      "200": "#DDDFE4",
     },
     borderColors: {
-      light: 'gray.200',
+      light: "gray.200",
     },
     textColors: {
-      light: '#1A1C21',
+      light: "#1A1C21",
+    },
+    surface: {
+      light: "white",
     },
   },
   space: {
-    verticalSpacing: '32px',
+    verticalSpacing: "32px",
   },
   components: {
     Button,
