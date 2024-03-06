@@ -65,6 +65,7 @@ function normalizeMonthlyTargets(data: MonthlyTarget[]) {
 
 export function Targets() {
   // Memoize results from normalization function
+  // TODO: Revisit this approach when implementing cell editing
   const normalizedMonthlyTargets = useMemo(
     () => normalizeMonthlyTargets(monthlyTargets),
     [monthlyTargets]
