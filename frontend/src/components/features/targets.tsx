@@ -1,5 +1,14 @@
 import { useMemo } from "react";
-import { Table, TableContainer, Tbody, Td, Th, Thead, Tr } from "../ui/table";
+import {
+  VascoTable,
+  VascoTbody,
+  VascoTd,
+  VascoTh,
+  VascoThead,
+  VascoTr,
+  VascoTableContainer,
+  VascoThMain,
+} from "../ui/table";
 import monthlyTargets from "../../../data/monthlyTargets.json";
 import { VisuallyHidden } from "@chakra-ui/react";
 
@@ -15,8 +24,6 @@ interface MonthlyTarget {
   endingMRR: number;
 }
 
-// TODO Avoid as many loops as possible,
-// and keep it readable.
 function normalizeMonthlyTargets(data: MonthlyTarget[]) {
   // Using a Map to guarantee the iteration order when mapping in JSX.
   const normalizedData = new Map<
@@ -67,115 +74,68 @@ export function Targets() {
   // Memoize results from normalization function
   // TODO: Revisit this approach when implementing cell editing
   const normalizedMonthlyTargets = useMemo(
-    () => normalizeMonthlyTargets(monthlyTargets),
+    () => Array.from(normalizeMonthlyTargets(monthlyTargets)),
     [monthlyTargets]
   );
 
+  // Need to extract the first cells of the first row
+  // in order to use the months as th cells
+  const [monthRow, ...remainingRows] = normalizedMonthlyTargets;
+  const [monthCellId, monthCells] = monthRow;
+
   return (
-    <TableContainer
-      bgColor="surface.light"
-      border="1px"
-      borderColor="gray.200"
-      borderRadius={5}
-    >
-      <Table
-        style={{
-          borderCollapse: "separate",
-          borderSpacing: 0,
-        }}
-      >
-        <Thead>
-          <Tr>
-            <Th
-              position="sticky"
-              top={0}
-              left={0}
-              border={0}
-              padding="16px"
-              fontSize="lg"
-              fontWeight="bold"
-              textTransform="capitalize"
-              letterSpacing={0}
-            >
-              Targets
-            </Th>
-          </Tr>
-        </Thead>
-        <Tbody>
-          {Array.from(normalizedMonthlyTargets).map((row, rowIndex) => {
-            const isFirstRow = rowIndex === 0;
+    <VascoTableContainer>
+      <VascoTable>
+        <VascoThead>
+          <VascoTr>
+            <VascoThMain>Targets</VascoThMain>
+          </VascoTr>
+          <VascoTr>
+            <VascoTh>
+              {/*
+                For the first cell of the first row, text
+                should be hidden but remain accessible to screen readers
+              */}
+              <VisuallyHidden>{monthCellId}</VisuallyHidden>
+            </VascoTh>
+            {monthCells.map((cell) => {
+              const { id: cellId, value } = cell;
+              return <VascoTh key={cellId}>{value}</VascoTh>;
+            })}
+            {/*
+              The last cell exists only for styling
+              purposes, can't tab into it and it is aria-hidden
+            */}
+            <VascoTh />
+          </VascoTr>
+        </VascoThead>
+        <VascoTbody>
+          {remainingRows.map((row, rowIndex) => {
             // We know all ids are unique because our array is
             // derived from a Map.
             const [rowId, cells] = row;
             return (
-              <Tr
-                key={rowId}
-                _first={{
-                  bgColor: "gray.50",
-                }}
-              >
+              <VascoTr key={rowId}>
                 {/* TODO transform rowId into a proper "copy" string */}
-                <Td
-                  key={rowId}
-                  _first={{
-                    bgColor: isFirstRow ? "gray.50" : "surface.light",
-                    borderRight: "1px",
-                    borderColor: "gray.200",
-                    minWidth: "220px",
-                  }}
-                  position="sticky"
-                  left={0}
-                  borderTop="1px"
-                  borderBottom={0}
-                  borderColor="gray.200"
-                  boxShadow="5px 10px 15px 0px rgba(184,184,184,0.25)"
-                  padding="8px 10px"
-                  tabIndex={0}
-                >
-                  {/*
-                    For the first cell of the first row, text
-                    should be hidden but remain accessible to screen readers
-                  */}
-                  {isFirstRow ? (
-                    <VisuallyHidden>{rowId}</VisuallyHidden>
-                  ) : (
-                    rowId
-                  )}
-                </Td>
+                <VascoTd>{rowId}</VascoTd>
                 {cells.map(({ id, value }) => {
                   const isHighlightedCell = rowId === "newBusinessMRR";
                   return (
-                    <Td
-                      key={id}
-                      borderTop="1px"
-                      borderBottom={0}
-                      borderColor="gray.200"
-                      textAlign="end"
-                      padding="8px 20px 8px 60px"
-                      tabIndex={0}
-                      color={isHighlightedCell ? "brand.primary" : undefined}
-                      bgColor={isHighlightedCell ? "#eef2fb" : undefined}
-                    >
+                    <VascoTd key={id} highlight={isHighlightedCell}>
                       {value}
-                    </Td>
+                    </VascoTd>
                   );
                 })}
-                <Td
-                  borderTop="1px"
-                  borderBottom={0}
-                  borderColor="gray.200"
-                  position="sticky"
-                  right={0}
-                  tabIndex={-1}
-                  padding="0"
-                  boxShadow="0px 10px 15px 5px rgba(184,184,184,0.25)"
-                  aria-hidden
-                />
-              </Tr>
+                {/*
+                  Again, last cell exists only for styling
+                  purposes, can't tab into it and it is aria-hidden
+                */}
+                <VascoTd />
+              </VascoTr>
             );
           })}
-        </Tbody>
-      </Table>
-    </TableContainer>
+        </VascoTbody>
+      </VascoTable>
+    </VascoTableContainer>
   );
 }

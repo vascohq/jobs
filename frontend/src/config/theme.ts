@@ -36,7 +36,10 @@ const theme = extendBaseTheme({
       light: "#1A1C21",
     },
     surface: {
-      light: "white",
+      light: {
+        bg: "white",
+        highlight: "#eef2fb",
+      },
     },
   },
   space: {
