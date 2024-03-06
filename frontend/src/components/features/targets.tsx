@@ -95,6 +95,7 @@ export function Targets() {
               fontSize="lg"
               fontWeight="bold"
               textTransform="capitalize"
+              letterSpacing={0}
             >
               Targets
             </Th>
@@ -129,6 +130,7 @@ export function Targets() {
                   borderColor="gray.200"
                   boxShadow="5px 10px 15px 0px rgba(184,184,184,0.25)"
                   padding="8px 10px"
+                  tabIndex={0}
                 >
                   {/*
                     For the first cell of the first row, text
@@ -141,6 +143,7 @@ export function Targets() {
                   )}
                 </Td>
                 {cells.map(({ id, value }) => {
+                  const isHighlightedCell = rowId === "newBusinessMRR";
                   return (
                     <Td
                       key={id}
@@ -149,6 +152,9 @@ export function Targets() {
                       borderColor="gray.200"
                       textAlign="end"
                       padding="8px 20px 8px 60px"
+                      tabIndex={0}
+                      color={isHighlightedCell ? "brand.primary" : undefined}
+                      bgColor={isHighlightedCell ? "#eef2fb" : undefined}
                     >
                       {value}
                     </Td>
@@ -163,6 +169,7 @@ export function Targets() {
                   tabIndex={-1}
                   padding="0"
                   boxShadow="0px 10px 15px 5px rgba(184,184,184,0.25)"
+                  aria-hidden
                 />
               </Tr>
             );
