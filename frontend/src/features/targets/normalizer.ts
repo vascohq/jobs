@@ -50,12 +50,12 @@ export function normalizeMonthlyTargets(
         const value = monthlyTarget[key];
         // Need to create unique IDs I can use when mapping
         // the data in JSX.
-        // Using underscore here because some values
-        // are negative numbers.
         const id = `${key}-${year}-${month}`;
         const valueType = getValueType(key);
+
         let cellData: CellData;
 
+        // We need to help Typescript infer the type of value
         switch (valueType) {
           case ValueType.Currency:
           case ValueType.Number:
