@@ -1,4 +1,5 @@
 import { type PropsWithChildren } from "react";
+import type * as CSS from "csstype";
 
 import {
   Table,
@@ -54,6 +55,7 @@ export function VascoTr({ children }: PropsWithChildren) {
 export function VascoThMain({ children }: PropsWithChildren) {
   return (
     <Th
+      tabIndex={0}
       color="textColors.light.base"
       position="sticky"
       top={0}
@@ -72,43 +74,61 @@ export function VascoThMain({ children }: PropsWithChildren) {
 
 // The following Th and Td components share styling
 const cellSharedStyles = {
-  _first: {
-    borderRight: "1px",
-    borderColor: "gray.200",
-    minWidth: "220px",
-    boxShadow: "5px 10px 15px 0px rgba(184,184,184,0.25)",
-    padding: "8px 10px",
-    position: "sticky",
-    left: 0,
-  },
-  _notFirst: {
-    padding: "8px 20px 8px 60px",
-    textAlign: "end",
-  },
-  _last: {
-    position: "sticky",
-    right: 0,
-    tabIndex: -1,
-    padding: "0",
-    boxShadow: "0px 10px 15px 5px rgba(184,184,184,0.25)",
-    "aria-hidden": true,
-  },
   color: "textColors.light.base",
   bgColor: "surface.light.bg",
   borderTop: "1px",
   borderBottom: 0,
   borderColor: "gray.200",
-  tabIndex: 0,
+  padding: "8px 20px 8px 60px",
+  _last: {
+    position: "sticky",
+    right: 0,
+    width: 0,
+    padding: "0",
+    boxShadow: "0px 10px 15px 5px rgba(184,184,184,0.25)",
+  },
 };
 
-export function VascoTh({ children }: PropsWithChildren) {
+export function VascoTh({
+  children,
+  bgColor,
+  fontWeight,
+  scope,
+  textAlign,
+  tabIndex = 0,
+  "aria-hidden": ariaHidden = false,
+}: PropsWithChildren<{
+  scope?: "row" | "col";
+  bgColor?: CSS.Property.BackgroundColor;
+  fontWeight?: CSS.Property.FontWeight;
+  textAlign?: CSS.Property.TextAlign;
+  tabIndex?: number;
+  "aria-hidden"?: boolean;
+}>) {
   return (
     <Th
+      tabIndex={tabIndex}
+      textAlign={textAlign}
+      {...(ariaHidden
+        ? {
+            "aria-hidden": ariaHidden,
+          }
+        : {})}
+      scope={scope}
       sx={{
         ...cellSharedStyles,
-        bgColor: "gray.50",
+        _first: {
+          borderRight: "1px",
+          borderColor: "gray.200",
+          minWidth: "220px",
+          boxShadow: "5px 10px 15px 0px rgba(184,184,184,0.25)",
+          padding: "8px 10px",
+          position: "sticky",
+          left: 0,
+        },
+        ...(bgColor ? { bgColor } : {}),
+        fontWeight: fontWeight || "400",
         fontSize: "md",
-        fontWeight: "bold",
         textTransform: "capitalize",
         letterSpacing: 0,
       }}
@@ -121,9 +141,24 @@ export function VascoTh({ children }: PropsWithChildren) {
 export function VascoTd({
   children,
   highlight,
-}: PropsWithChildren<{ highlight?: boolean }>) {
+  textAlign,
+  tabIndex = 0,
+  "aria-hidden": ariaHidden = false,
+}: PropsWithChildren<{
+  highlight?: boolean;
+  textAlign?: CSS.Property.TextAlign;
+  tabIndex?: number;
+  "aria-hidden"?: boolean;
+}>) {
   return (
     <Td
+      tabIndex={tabIndex}
+      textAlign={textAlign}
+      {...(ariaHidden
+        ? {
+            "aria-hidden": ariaHidden,
+          }
+        : {})}
       sx={{
         ...cellSharedStyles,
         ...(highlight
