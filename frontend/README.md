@@ -27,7 +27,7 @@ endingMRR = beginningMRR + newBusinessMRR + churnedMRR + expansionMRR
 ```
 
 ```math
-churnedMRR = beginningMRR * churnRate * -1
+churnedMRR = beginningMRR * churnRate
 ```
 
 ```math
@@ -74,7 +74,7 @@ quarterlyExpansionMRR = beginningMRR(m1) * expansionRate(m1) + beginningMRR(m2) 
 ```
 
 ```math
-quarterlyAverageBeginningMRR = (beginningMRR(m1) + beginningMRR(m2) + beginningMRR(m3)) / 3 * -1
+quarterlyAverageBeginningMRR = (beginningMRR(m1) + beginningMRR(m2) + beginningMRR(m3)) / 3
 ```
 
 ### Notes
