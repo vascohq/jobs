@@ -7,6 +7,7 @@ export async function GET() {
     const headers = new Headers({
       "Content-Type": "application/json",
       "Access-Control-Allow-Origin": "*",
+      "Cache-Control": "public, s-maxage=3600, stale-while-revalidate=600",
     });
 
     return new Response(JSON.stringify(monthlyTargets), { headers });
