@@ -54,6 +54,7 @@ export function VascoTr({ children }: PropsWithChildren) {
 export function VascoThMain({ children }: PropsWithChildren) {
   return (
     <Th
+      color="textColors.light.base"
       position="sticky"
       top={0}
       left={0}
@@ -92,6 +93,7 @@ const cellSharedStyles = {
     boxShadow: "0px 10px 15px 5px rgba(184,184,184,0.25)",
     "aria-hidden": true,
   },
+  color: "textColors.light.base",
   bgColor: "surface.light.bg",
   borderTop: "1px",
   borderBottom: 0,

@@ -33,7 +33,9 @@ const theme = extendBaseTheme({
       light: "gray.200",
     },
     textColors: {
-      light: "#1A1C21",
+      light: {
+        base: "#1A1C21",
+      },
     },
     surface: {
       light: {
