@@ -83,11 +83,12 @@ quarterlyAverageBeginningMRR = (beginningMRR(m1) + beginningMRR(m2) + beginningM
 
 ## Level 5
 
-Do you still have some time? You are tasked with writing an RFC to technically shape a proposed feature. The feature involves adding a benchmark badge to each cell, sourced from an API.
+Do you still have some time? You are tasked with writing an RFC to technically shape a proposed change. The change involves the requirements to make the formulas calculation reusable also in the backend. For example, if the backend wants to calculate the Churn Rate, it should be able to use the same formulas as the frontend.
 
 In the RFC, please specifically include your proposed solution for:
 
-- The new API endpoint.
-- How you plan to fetch, store, and consume data in the table.
+- Having isomorphic formulas.
+- How to add new formulas overtime.
+- How the developer would use the formulas.
 - We expect pseudo-code, not a full implementation.
 - Include the pros and cons of your solution.
