@@ -1,4 +1,6 @@
+// My super duper translation lib ;-)
 const translations: Record<string, string> = {
+  targets: "Targets",
   month: "Month",
   year: "Year",
   beginningMRR: "Beginning MRR",
