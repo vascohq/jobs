@@ -8,8 +8,6 @@ export const currency = new Intl.NumberFormat("en-US", {
 
 export const percent = new Intl.NumberFormat("en-US", {
   style: "percent",
-  minimumFractionDigits: 2,
-  maximumFractionDigits: 2,
 });
 
 export const number = new Intl.NumberFormat("en-US", {
@@ -31,7 +29,7 @@ export function displayValue(
     case ValueType.Number:
       return number.format(value as number);
     case ValueType.Percentage:
-      return percent.format(value as number);
+      return percent.format((value as number) / 100);
     case ValueType.Date:
       return dateFormatter.format(value as Date);
     case ValueType.Copy:
