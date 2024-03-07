@@ -1,5 +1,6 @@
 {
   "name": "backend",
+  "description": "Vasco's Backend Challenge",
   "version": "1.0.0",
   "license": "UNLICENSED",
   "private": true,
