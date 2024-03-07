@@ -7,11 +7,6 @@ export async function GET() {
     const headers = new Headers({
       "Content-Type": "application/json",
       "Access-Control-Allow-Origin": "*",
-      // Cache the data for 1 hour,
-      // and allow it to become stale while
-      // revalidating in the background for another 10
-      // Completely arbitrary values, the data never changes ;-)
-      "Cache-Control": "public, max-age=3600, stale-while-revalidate=600",
     });
 
     return new Response(JSON.stringify(monthlyTargets), { headers });
