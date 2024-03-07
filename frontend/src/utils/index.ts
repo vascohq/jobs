@@ -37,6 +37,7 @@ export function displayValue(
     case ValueType.Copy:
       return getTranslation(value as string);
     default:
-      return value;
+      // We need to return something that JSX can render
+      return value.toLocaleString();
   }
 }

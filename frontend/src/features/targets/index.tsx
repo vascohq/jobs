@@ -9,8 +9,8 @@ import {
   VascoTr,
   VascoTableContainer,
   VascoThMain,
-} from "../../ui/table";
-import monthlyTargets from "../../../../data/monthlyTargets.json";
+} from "../../components/table";
+import monthlyTargets from "../../../data/monthlyTargets.json";
 import { normalizeMonthlyTargets } from "./normalizer";
 import { ValueType } from "../../types";
 import { displayValue } from "../../utils";

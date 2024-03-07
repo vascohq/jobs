@@ -1,5 +1,5 @@
-import { Targets } from "./components/features/targets";
-import { Layout } from "./components/layouts/basic-layout";
+import { Targets } from "./features/targets";
+import { Layout } from "./layouts/basic-layout";
 
 function App() {
   return (
