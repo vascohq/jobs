@@ -10,21 +10,30 @@ import {
   VascoTableContainer,
   VascoThMain,
 } from "../../components/table";
-import monthlyTargets from "../../data/monthlyTargets.json";
 import { normalizeMonthlyTargets } from "./normalizer";
 import { ValueType } from "../../types";
 import { displayValue } from "../../utils";
+import { useMonthyTargets } from "../../client";
 
 export function Targets() {
+  const { data: monthlyTargets } = useMonthyTargets();
   // Memoize results from normalization function
   // TODO: Revisit this approach when implementing cell editing
-  const normalizedMonthlyTargets = useMemo(
-    () => Array.from(normalizeMonthlyTargets(monthlyTargets)),
-    [monthlyTargets]
-  );
+  const normalizedMonthlyTargets = useMemo(() => {
+    if (monthlyTargets) {
+      return Array.from(normalizeMonthlyTargets(monthlyTargets));
+    }
+    return [];
+  }, [monthlyTargets]);
 
-  console.log("normalizedMonthlyTargets", normalizedMonthlyTargets);
+  console.log("monthly targets", normalizedMonthlyTargets);
 
+  // Blocking the entire UI until
+  // data is received from server.
+  if (!normalizedMonthlyTargets.length) {
+    // Could be a spinner or skeletons
+    return null;
+  }
   // Need to extract the first cells of the first row
   // in order to use the months as th cells
   const [monthRow, ...remainingRows] = normalizedMonthlyTargets;
