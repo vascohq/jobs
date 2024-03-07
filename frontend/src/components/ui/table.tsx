@@ -125,7 +125,7 @@ export function VascoTd({
       sx={{
         ...cellSharedStyles,
         ...(highlight
-          ? { bgColor: "surface.light.hightlight", color: "brand.primary" }
+          ? { bgColor: "surface.light.highlight", color: "brand.primary" }
           : {}),
       }}
     >

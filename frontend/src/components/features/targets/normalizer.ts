@@ -1,6 +1,6 @@
 import { CellData, MonthlyTarget, ValueType } from "../../types";
 
-export function getValueType(key: string) {
+function getValueType(key: string): ValueType {
   switch (key) {
     case "beginningMRR":
     case "newBusinessMRR":
@@ -17,7 +17,9 @@ export function getValueType(key: string) {
   }
 }
 
-export function normalizeMonthlyTargets(data: MonthlyTarget[]) {
+export function normalizeMonthlyTargets(
+  data: MonthlyTarget[]
+): Map<keyof MonthlyTarget, CellData[]> {
   // Using a Map to guarantee the iteration order when mapping in JSX.
   // We don't want track the year in our Map, so we'll omit it.
   const normalizedData = new Map<
@@ -52,13 +54,20 @@ export function normalizeMonthlyTargets(data: MonthlyTarget[]) {
         // are negative numbers.
         const id = `${key}-${year}-${month}`;
         const valueType = getValueType(key);
+        let cellData: CellData;
 
-        const cellData: CellData = {
-          id,
-          value:
-            valueType === ValueType.Date ? new Date(year, month - 1) : value,
-          valueType,
-        };
+        switch (valueType) {
+          case ValueType.Currency:
+          case ValueType.Number:
+          case ValueType.Percentage:
+            cellData = { id, value, valueType };
+            break;
+          case ValueType.Date:
+            cellData = { id, value: new Date(year, month - 1), valueType };
+            break;
+          default:
+            throw new Error(`Unsupported ValueType: ${valueType}`);
+        }
 
         normalizedData.get(key)?.push(cellData);
       }

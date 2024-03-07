@@ -11,8 +11,9 @@ import {
   VascoThMain,
 } from "../../ui/table";
 import monthlyTargets from "../../../../data/monthlyTargets.json";
-import { Display } from "../../ui/display";
 import { normalizeMonthlyTargets } from "./normalizer";
+import { ValueType } from "../../types";
+import { displayValue } from "../../utils";
 
 export function Targets() {
   // Memoize results from normalization function
@@ -21,6 +22,8 @@ export function Targets() {
     () => Array.from(normalizeMonthlyTargets(monthlyTargets)),
     [monthlyTargets]
   );
+
+  console.log("normalizedMonthlyTargets", normalizedMonthlyTargets);
 
   // Need to extract the first cells of the first row
   // in order to use the months as th cells
@@ -45,9 +48,7 @@ export function Targets() {
             {monthCells.map((cell) => {
               const { id: cellId, value, valueType } = cell;
               return (
-                <VascoTh key={cellId}>
-                  <Display value={value} valueType={valueType} />
-                </VascoTh>
+                <VascoTh key={cellId}>{displayValue(value, valueType)}</VascoTh>
               );
             })}
             {/*
@@ -65,12 +66,12 @@ export function Targets() {
             return (
               <VascoTr key={rowId}>
                 {/* TODO transform rowId into a proper "copy" string */}
-                <VascoTd>{rowId}</VascoTd>
+                <VascoTd>{displayValue(rowId, ValueType.Copy)}</VascoTd>
                 {cells.map(({ id, value, valueType }) => {
                   const isHighlightedCell = rowId === "newBusinessMRR";
                   return (
                     <VascoTd key={id} highlight={isHighlightedCell}>
-                      <Display value={value} valueType={valueType} />
+                      {displayValue(value, valueType)}
                     </VascoTd>
                   );
                 })}
