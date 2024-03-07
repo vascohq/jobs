@@ -30,47 +30,65 @@ export function Targets() {
   const [monthRow, ...remainingRows] = normalizedMonthlyTargets;
   const [monthCellId, monthCells] = monthRow;
 
+  // Went with a table with two headers
+  // https://www.w3.org/WAI/tutorials/tables/two-headers/
   return (
     <VascoTableContainer>
       <VascoTable>
         <VascoThead>
           <VascoTr>
-            <VascoThMain>Targets</VascoThMain>
+            <VascoThMain>{displayValue("targets", ValueType.Copy)}</VascoThMain>
           </VascoTr>
           <VascoTr>
-            <VascoTh>
+            <VascoTh scope="col" bgColor="gray.50">
               {/*
                 For the first cell of the first row, text
-                should be hidden but remain accessible to screen readers
+                should be visually hidden but remain accessible
+                to screen readers
               */}
-              <VisuallyHidden>{monthCellId}</VisuallyHidden>
+              <VisuallyHidden>
+                {displayValue(monthCellId, ValueType.Copy)}
+              </VisuallyHidden>
             </VascoTh>
             {monthCells.map((cell) => {
               const { id: cellId, value, valueType } = cell;
               return (
-                <VascoTh key={cellId}>{displayValue(value, valueType)}</VascoTh>
+                <VascoTh
+                  key={cellId}
+                  scope="col"
+                  bgColor="gray.50"
+                  fontWeight="bold"
+                  textAlign="end"
+                >
+                  {displayValue(value, valueType)}
+                </VascoTh>
               );
             })}
             {/*
               The last cell exists only for styling
               purposes, can't tab into it and it is aria-hidden
             */}
-            <VascoTh />
+            <VascoTh tabIndex={-1} aria-hidden={true} />
           </VascoTr>
         </VascoThead>
         <VascoTbody>
-          {remainingRows.map((row, rowIndex) => {
+          {remainingRows.map((row) => {
             // We know all ids are unique because our array is
             // derived from a Map.
             const [rowId, cells] = row;
             return (
               <VascoTr key={rowId}>
-                {/* TODO transform rowId into a proper "copy" string */}
-                <VascoTd>{displayValue(rowId, ValueType.Copy)}</VascoTd>
+                <VascoTh scope="row">
+                  {displayValue(rowId, ValueType.Copy)}
+                </VascoTh>
                 {cells.map(({ id, value, valueType }) => {
                   const isHighlightedCell = rowId === "newBusinessMRR";
                   return (
-                    <VascoTd key={id} highlight={isHighlightedCell}>
+                    <VascoTd
+                      key={id}
+                      highlight={isHighlightedCell}
+                      textAlign="end"
+                    >
                       {displayValue(value, valueType)}
                     </VascoTd>
                   );
@@ -79,7 +97,7 @@ export function Targets() {
                   Again, last cell exists only for styling
                   purposes, can't tab into it and it is aria-hidden
                 */}
-                <VascoTd />
+                <VascoTd tabIndex={-1} aria-hidden={true} />
               </VascoTr>
             );
           })}
