@@ -17,4 +17,4 @@
 
 Once you are done, send your results to someone from Vasco (e.g. [@rothlis](https://github.com/rothlis)) or at career@vascohq.com.
 
-For the engineering challenges, you can send your Github project link. You can also zip your directory and send it via email, don't forget to include your `.git` folder.
+For the engineering challenges, you can send your Github project link. You can also zip your directory and send it via email, don't forget to include your `.git` folder
