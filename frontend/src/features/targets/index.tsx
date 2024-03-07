@@ -16,7 +16,9 @@ import { displayValue } from "../../utils";
 import { useMonthyTargets } from "../../client";
 
 export function Targets() {
+  // Fetching data from server
   const { data: monthlyTargets } = useMonthyTargets();
+
   // Memoize results from normalization function
   // TODO: Revisit this approach when implementing cell editing
   const normalizedMonthlyTargets = useMemo(() => {
@@ -31,7 +33,8 @@ export function Targets() {
   // Blocking the entire UI until
   // data is received from server.
   if (!normalizedMonthlyTargets.length) {
-    // Could be a spinner or skeletons
+    // Could be a spinner or skeletons that would also rely
+    // on the client state (from swr)
     return null;
   }
   // Need to extract the first cells of the first row
