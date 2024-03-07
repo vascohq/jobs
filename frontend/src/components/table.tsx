@@ -1,4 +1,4 @@
-import { type PropsWithChildren } from "react";
+import { forwardRef, type PropsWithChildren } from "react";
 import type * as CSS from "csstype";
 
 import {
@@ -14,9 +14,13 @@ import {
 // This is my mini UI component library
 // built on top on Chakra UI, we only expose
 // what is actually useful for us (for now).
-export function VascoTableContainer({ children }: PropsWithChildren) {
+export const VascoTableContainer = forwardRef<
+  HTMLDivElement,
+  PropsWithChildren
+>(({ children }, ref) => {
   return (
     <TableContainer
+      ref={ref}
       bgColor="surface.light.bg"
       border="1px"
       borderColor="gray.200"
@@ -25,20 +29,25 @@ export function VascoTableContainer({ children }: PropsWithChildren) {
       {children}
     </TableContainer>
   );
-}
+});
 
-export function VascoTable({ children }: PropsWithChildren) {
-  return (
-    <Table
-      style={{
-        borderCollapse: "separate",
-        borderSpacing: 0,
-      }}
-    >
-      {children}
-    </Table>
-  );
-}
+// Using forwardRef here to allow event delagation on tables
+// The goal is to avoid having event listeners on each rows or each cells.
+export const VascoTable = forwardRef<HTMLTableElement, PropsWithChildren>(
+  ({ children }, ref) => {
+    return (
+      <Table
+        ref={ref}
+        style={{
+          borderCollapse: "separate",
+          borderSpacing: 0,
+        }}
+      >
+        {children}
+      </Table>
+    );
+  }
+);
 
 export function VascoThead({ children }: PropsWithChildren) {
   return <Thead>{children}</Thead>;

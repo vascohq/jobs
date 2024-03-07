@@ -1,4 +1,10 @@
-import { CellData, MonthlyTarget, ValueType } from "../../types";
+import {
+  type CellData,
+  type MonthlyTarget,
+  type MonthlyTargetMap,
+  type MonthlyTargetKeys,
+  ValueType,
+} from "../../types";
 
 function getValueType(key: string): ValueType {
   switch (key) {
@@ -19,7 +25,7 @@ function getValueType(key: string): ValueType {
 
 export function normalizeMonthlyTargets(
   data: MonthlyTarget[]
-): Map<keyof MonthlyTarget, CellData[]> {
+): MonthlyTargetMap {
   // Using a Map to guarantee the iteration order when mapping in JSX.
   // We don't want track the year in our Map, so we'll omit it.
   const normalizedData = new Map<
@@ -29,7 +35,7 @@ export function normalizeMonthlyTargets(
 
   data.forEach((monthlyTarget, index) => {
     // Create an array of keys from the object
-    const keys = Object.keys(monthlyTarget) as Array<keyof MonthlyTarget>;
+    const keys = Object.keys(monthlyTarget) as Array<MonthlyTargetKeys>;
     const { year, month } = monthlyTarget;
 
     // We need to transform the shape of

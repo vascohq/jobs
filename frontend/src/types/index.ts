@@ -56,3 +56,6 @@ export type CellData =
   | CellDataNumber
   | CellDataDate
   | CellDataCopy;
+
+export type MonthlyTargetKeys = keyof MonthlyTarget;
+export type MonthlyTargetMap = Map<MonthlyTargetKeys, CellData[]>;

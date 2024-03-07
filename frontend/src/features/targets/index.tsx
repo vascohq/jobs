@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import { VisuallyHidden } from "@chakra-ui/react";
 import {
   VascoTable,
@@ -16,6 +16,8 @@ import { displayValue } from "../../utils";
 import { useMonthyTargets } from "../../client";
 
 export function Targets() {
+  const divRef = useRef<HTMLDivElement>(null);
+
   // Fetching data from server
   const { data: monthlyTargets } = useMonthyTargets();
 
@@ -27,6 +29,33 @@ export function Targets() {
     }
     return [];
   }, [monthlyTargets]);
+
+  const handleKeyDown = (event: KeyboardEvent) => {
+    console.log("event.target", event);
+    if (event.key === "Enter" && event.target instanceof HTMLElement) {
+      console.log("---");
+      const cell = event.target.closest("td");
+      if (cell) {
+        console.log({ cell });
+      }
+    }
+  };
+
+  useEffect(() => {
+    const currentRef = divRef.current;
+    console.log({ currentRef });
+    if (currentRef) {
+      currentRef.addEventListener("keydown", handleKeyDown as EventListener);
+    }
+    return () => {
+      if (currentRef) {
+        currentRef.removeEventListener(
+          "keydown",
+          handleKeyDown as EventListener
+        );
+      }
+    };
+  }, [divRef]);
 
   console.log("monthly targets", normalizedMonthlyTargets);
 
@@ -45,7 +74,7 @@ export function Targets() {
   // Went with a table with two headers
   // https://www.w3.org/WAI/tutorials/tables/two-headers/
   return (
-    <VascoTableContainer>
+    <VascoTableContainer ref={divRef}>
       <VascoTable>
         <VascoThead>
           <VascoTr>
