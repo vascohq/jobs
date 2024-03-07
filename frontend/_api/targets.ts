@@ -1,4 +1,4 @@
-import monthlyTargets from "../data/monthlyTargets.json";
+import monthlyTargets from "../src/data/monthlyTargets.json";
 
 export const runtime = "edge";
 
