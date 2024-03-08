@@ -141,11 +141,13 @@ export function VascoTh({
 export function VascoTd({
   children,
   isEditable,
+  isHeading,
   textAlign,
   tabIndex = 0,
   "aria-hidden": ariaHidden,
 }: PropsWithChildren<{
   isEditable?: boolean;
+  isHeading?: boolean;
   textAlign?: CSS.Property.TextAlign;
   tabIndex?: number;
   "aria-hidden"?: boolean | undefined;
@@ -168,7 +170,19 @@ export function VascoTd({
       tabIndex={tabIndex}
       textAlign={textAlign}
       aria-hidden={ariaHidden}
-      sx={{ ...cellSharedStyles }}
+      sx={{
+        ...(isHeading
+          ? {
+              bgColor: "gray.50",
+              borderLeft: "1px",
+              borderRight: "1px",
+              borderTop: "0",
+              borderBottom: "0",
+              borderColor: "gray.50",
+            }
+          : {}),
+        ...cellSharedStyles,
+      }}
     >
       {children}
     </Td>

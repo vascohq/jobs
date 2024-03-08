@@ -373,7 +373,7 @@ export function getQuarterlyTargets(monthlyTargets: MonthlyTargetMap) {
       monthlyTargets,
       monthIndexes
     );
-    return {
+    const quarterlyTargets = {
       beginningMRR: quarterlyBeginningMRR,
       averageBeginningMRR: quarterlyAverageBeginningMRR,
       newBusinessMRR: quarterlyNewBusinessMRR,
@@ -383,5 +383,6 @@ export function getQuarterlyTargets(monthlyTargets: MonthlyTargetMap) {
       expansionMRR: quarterlyExpansionMRR,
       endingMRR: quarterlyEndingMRR,
     };
+    return quarterlyTargets;
   });
 }

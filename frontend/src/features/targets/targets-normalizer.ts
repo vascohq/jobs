@@ -136,5 +136,7 @@ export function normalizeQuarterlyTargets(
     });
   });
 
+  console.log({ newMonthlyTargetsMap, quarterlyTargets });
+
   return newMonthlyTargetsMap;
 }

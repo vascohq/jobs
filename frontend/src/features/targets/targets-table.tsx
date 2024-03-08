@@ -11,7 +11,7 @@ import {
   VascoThMain,
   VascoTdInput,
 } from "../../components/table";
-import { ValueType, MonthlyTargetMap } from "../../types";
+import { ValueType, MonthlyTargetMap, PeriodType } from "../../types";
 import { debounce, displayValue } from "../../utils";
 import { updateMonthlyTargetsMap } from "./targets-rules";
 
@@ -90,11 +90,20 @@ export function TargetsTable({
                 <VascoTh scope="row">
                   {displayValue(rowId, ValueType.Copy)}
                 </VascoTh>
-                {cells.map(({ id, value, valueType }, index) => {
+                {cells.map(({ id, value, valueType, periodType }, index) => {
+                  const isQuarterly = periodType === PeriodType.Quarterly;
                   const isEditable =
-                    rowId === "newBusinessMRR" && typeof value !== "object";
+                    !isQuarterly &&
+                    rowId === "newBusinessMRR" &&
+                    typeof value !== "object";
+
                   return (
-                    <VascoTd key={id} isEditable={isEditable} textAlign="end">
+                    <VascoTd
+                      key={id}
+                      isHeading={isQuarterly}
+                      isEditable={isEditable}
+                      textAlign="end"
+                    >
                       {isEditable ? (
                         <VascoTdInput
                           data-row-id={rowId}
