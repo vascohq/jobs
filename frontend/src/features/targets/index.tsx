@@ -1,5 +1,8 @@
 import { useMemo } from "react";
-import { normalizeMonthlyTargets } from "./normalizer";
+import {
+  normalizeMonthlyTargets,
+  normalizeQuarterlyTargets,
+} from "./targets-normalizer";
 import { useMonthyTargets } from "../../client";
 import { TargetsTable } from "./targets-table";
 
@@ -11,7 +14,7 @@ export function Targets() {
   // TODO: Revisit this approach when implementing cell editing
   const normalizedMonthlyTargets = useMemo(() => {
     if (monthlyTargets) {
-      return normalizeMonthlyTargets(monthlyTargets);
+      return normalizeQuarterlyTargets(normalizeMonthlyTargets(monthlyTargets));
     }
     return null;
   }, [monthlyTargets]);

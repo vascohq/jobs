@@ -1,85 +1,8 @@
 import {
   type CellData,
-  type MonthlyTarget,
   type MonthlyTargetMap,
-  type MonthlyTargetKeys,
-  ValueType,
   MonthlyTargetKeysFiltered,
 } from "../../types";
-
-function getValueType(key: string): ValueType {
-  switch (key) {
-    case "beginningMRR":
-    case "newBusinessMRR":
-    case "endingMRR":
-      return ValueType.Currency;
-    case "churnRate":
-    case "expansionRate":
-      return ValueType.Percentage;
-    case "month":
-    case "year":
-      return ValueType.Date;
-    default:
-      return ValueType.Number;
-  }
-}
-
-export function normalizeMonthlyTargets(
-  data: MonthlyTarget[]
-): MonthlyTargetMap {
-  // Using a Map to guarantee the iteration order when mapping in JSX.
-  // We don't want track the year in our Map, so we'll omit it.
-  const normalizedData = new Map<MonthlyTargetKeysFiltered, CellData[]>();
-
-  data.forEach((monthlyTarget, index) => {
-    // Create an array of keys from the object
-    const keys = Object.keys(monthlyTarget) as Array<MonthlyTargetKeys>;
-    const { year, month } = monthlyTarget;
-
-    // We need to transform the shape of
-    // our data to be suitable for our table
-    keys.forEach((key) => {
-      const isFirstItem = index === 0;
-      const isYear = key === "year";
-
-      // Create the keys in the Map, we don't want
-      // to display a year row in our table so we skip it
-      if (isFirstItem && !isYear) {
-        normalizedData.set(key, []);
-      }
-
-      // Feed the map with the data, as per the above typing,
-      // we omit the year row in the normalizedData Map
-      if (!isYear) {
-        const value = monthlyTarget[key];
-        // Need to create unique IDs I can use when mapping
-        // the data in JSX.
-        const id = `${key}-${year}-${month}`;
-        const valueType = getValueType(key);
-
-        let cellData: CellData;
-
-        // We need to help Typescript infer the type of value
-        switch (valueType) {
-          case ValueType.Currency:
-          case ValueType.Number:
-          case ValueType.Percentage:
-            cellData = { id, value, valueType };
-            break;
-          case ValueType.Date:
-            cellData = { id, value: new Date(year, month - 1), valueType };
-            break;
-          default:
-            throw new Error(`Unsupported ValueType: ${valueType}`);
-        }
-
-        normalizedData.get(key)?.push(cellData);
-      }
-    });
-  });
-
-  return normalizedData;
-}
 
 // Get endingMRR
 export function getEndingMRR(
@@ -192,6 +115,7 @@ function updateMapFromNewEndingMRR(
   return newTargetsMap;
 }
 
+// Get endingMRR derived from newBunessMRR
 function getEndingMRRFromNewBunessMRR(
   monthlyTargets: MonthlyTargetMap,
   monthIndex: number,
@@ -207,6 +131,7 @@ function getEndingMRRFromNewBunessMRR(
   return endingMRRValue;
 }
 
+// Get current endingMRR
 function getCurrentEndingMRR(
   monthlyTargets: MonthlyTargetMap,
   monthIndex: number
@@ -221,6 +146,7 @@ function getCurrentEndingMRR(
   return endingMRRValue;
 }
 
+// Update Map derived from newBunessMRR
 function updateMapFromNewBunisessMRR(
   monthlyTargets: MonthlyTargetMap,
   monthIndex: number,
@@ -243,6 +169,7 @@ function updateMapFromNewBunisessMRR(
   return newTargetsMap;
 }
 
+// Update monthly targets from edits
 export function updateMonthlyTargetsMap(
   monthlyTargets: MonthlyTargetMap,
   rowId: MonthlyTargetKeysFiltered,
@@ -252,12 +179,125 @@ export function updateMonthlyTargetsMap(
 ) {
   const monthIndex = Number(cellIndex);
 
+  // If newBusinessMRR was edited update accordingly
   if (rowId === "newBusinessMRR") {
     const updatedMap = updateMapFromNewBunisessMRR(
       monthlyTargets,
       monthIndex,
       value
     );
+    console.log(
+      ">>> getQuarterlyChurnedMMR",
+      getQuarterlyChurnedMMR(updatedMap, [0, 1, 2])
+    );
     callbackFn(updatedMap);
   }
+}
+
+// Quartely data related methods
+
+// Get quarterly beginningMRR
+export function getQuarterlyBeginningMRR(
+  monthlyTargets: MonthlyTargetMap,
+  monthIndex: number
+) {
+  return getValueFromMap(monthlyTargets, "beginningMRR", monthIndex);
+}
+
+// Get quarterly newBusinessMRR
+export function getQuarterlyNewBusinessMRR(
+  monthlyTargets: MonthlyTargetMap,
+  quarterMonthStartIndex: number
+) {
+  let sum = 0;
+
+  // The sum of the 3 months of the quarter
+  for (
+    let monthIndex = quarterMonthStartIndex;
+    monthIndex <= quarterMonthStartIndex + 2;
+    monthIndex++
+  ) {
+    sum = sum + getValueFromMap(monthlyTargets, "newBusinessMRR", monthIndex);
+  }
+
+  return sum;
+}
+
+// Get quarterly churn rate
+export function getQuarterlyChurnRate(
+  monthlyTargets: MonthlyTargetMap,
+  monthIndexes: [number, number, number]
+) {
+  return (
+    getQuarterlyChurnedMMR(monthlyTargets, monthIndexes) /
+    getQuarterlyAverageBeginningMMR(monthlyTargets, monthIndexes)
+  );
+}
+
+// Get quarterlyChurnedMMR
+export function getQuarterlyChurnedMMR(
+  monthlyTargets: MonthlyTargetMap,
+  monthIndexes: [number, number, number]
+) {
+  const quarterlyChurnedMMR = monthIndexes.reduce((acc, monthIndex) => {
+    const value =
+      getValueFromMap(monthlyTargets, "beginningMRR", monthIndex) *
+      (getValueFromMap(monthlyTargets, "churnRate", monthIndex) / 100);
+
+    return acc + value;
+  }, 0);
+
+  console.log({ quarterlyChurnedMMR });
+
+  return quarterlyChurnedMMR;
+}
+
+// Get quarterlyExpansionMMR
+export function getQuarterlyExpansionMMR(
+  monthlyTargets: MonthlyTargetMap,
+  monthIndexes: [number, number, number]
+) {
+  const quarterlyExpansionMMR = monthIndexes.reduce((acc, monthIndex) => {
+    const value =
+      getValueFromMap(monthlyTargets, "beginningMRR", monthIndex) *
+      (getValueFromMap(monthlyTargets, "expansionRate", monthIndex) / 100);
+    return acc + value;
+  }, 0);
+
+  console.log({ quarterlyExpansionMMR });
+  return quarterlyExpansionMMR;
+}
+
+// get quarterlyAverageBeginningMMR
+export function getQuarterlyAverageBeginningMMR(
+  monthlyTargets: MonthlyTargetMap,
+  monthIndexes: [number, number, number]
+) {
+  const totalBeginningMRR = monthIndexes.reduce((acc, monthIndex) => {
+    return acc + getValueFromMap(monthlyTargets, "beginningMRR", monthIndex);
+  }, 0);
+
+  return totalBeginningMRR / monthIndexes.length;
+}
+
+export function updateQuarterlyTargetsMap(
+  monthlyTargets: MonthlyTargetMap
+): MonthlyTargetMap {
+  const quarterBeginningIndexes = [0, 3, 6, 9];
+
+  console.log("---------------");
+
+  quarterBeginningIndexes.forEach((quarterIndex) => {
+    const quarterlyBeginningMRR = getQuarterlyBeginningMRR(
+      monthlyTargets,
+      quarterIndex
+    );
+    const quarterlyNewBusinessMRR = getQuarterlyNewBusinessMRR(
+      monthlyTargets,
+      quarterIndex
+    );
+    console.log({ quarterlyBeginningMRR, quarterlyNewBusinessMRR });
+  });
+
+  return monthlyTargets;
 }

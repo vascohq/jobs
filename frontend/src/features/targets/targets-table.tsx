@@ -13,7 +13,7 @@ import {
 } from "../../components/table";
 import { ValueType, MonthlyTargetMap } from "../../types";
 import { debounce, displayValue } from "../../utils";
-import { updateMonthlyTargetsMap } from "./normalizer";
+import { updateMonthlyTargetsMap } from "./targets-rules";
 
 const update = debounce(updateMonthlyTargetsMap, 1000);
 
