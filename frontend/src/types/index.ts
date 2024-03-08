@@ -58,4 +58,5 @@ export type CellData =
   | CellDataCopy;
 
 export type MonthlyTargetKeys = keyof MonthlyTarget;
-export type MonthlyTargetMap = Map<MonthlyTargetKeys, CellData[]>;
+export type MonthlyTargetKeysFiltered = keyof Omit<MonthlyTarget, "year">;
+export type MonthlyTargetMap = Map<MonthlyTargetKeysFiltered, CellData[]>;

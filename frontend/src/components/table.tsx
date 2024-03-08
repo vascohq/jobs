@@ -1,7 +1,9 @@
-import { forwardRef, type PropsWithChildren } from "react";
+import { type PropsWithChildren } from "react";
 import type * as CSS from "csstype";
 
 import {
+  Input,
+  InputProps,
   Table,
   TableContainer,
   Tbody,
@@ -14,13 +16,9 @@ import {
 // This is my mini UI component library
 // built on top on Chakra UI, we only expose
 // what is actually useful for us (for now).
-export const VascoTableContainer = forwardRef<
-  HTMLDivElement,
-  PropsWithChildren
->(({ children }, ref) => {
+export function VascoTableContainer({ children }: PropsWithChildren) {
   return (
     <TableContainer
-      ref={ref}
       bgColor="surface.light.bg"
       border="1px"
       borderColor="gray.200"
@@ -29,25 +27,20 @@ export const VascoTableContainer = forwardRef<
       {children}
     </TableContainer>
   );
-});
+}
 
-// Using forwardRef here to allow event delagation on tables
-// The goal is to avoid having event listeners on each rows or each cells.
-export const VascoTable = forwardRef<HTMLTableElement, PropsWithChildren>(
-  ({ children }, ref) => {
-    return (
-      <Table
-        ref={ref}
-        style={{
-          borderCollapse: "separate",
-          borderSpacing: 0,
-        }}
-      >
-        {children}
-      </Table>
-    );
-  }
-);
+export function VascoTable({ children }: PropsWithChildren) {
+  return (
+    <Table
+      style={{
+        borderCollapse: "separate",
+        borderSpacing: 0,
+      }}
+    >
+      {children}
+    </Table>
+  );
+}
 
 export function VascoThead({ children }: PropsWithChildren) {
   return <Thead>{children}</Thead>;
@@ -105,24 +98,20 @@ export function VascoTh({
   scope,
   textAlign,
   tabIndex = 0,
-  "aria-hidden": ariaHidden = false,
+  "aria-hidden": ariaHidden,
 }: PropsWithChildren<{
   scope?: "row" | "col";
   bgColor?: CSS.Property.BackgroundColor;
   fontWeight?: CSS.Property.FontWeight;
   textAlign?: CSS.Property.TextAlign;
   tabIndex?: number;
-  "aria-hidden"?: boolean;
+  "aria-hidden"?: boolean | undefined;
 }>) {
   return (
     <Th
       tabIndex={tabIndex}
       textAlign={textAlign}
-      {...(ariaHidden
-        ? {
-            "aria-hidden": ariaHidden,
-          }
-        : {})}
+      aria-hidden={ariaHidden}
       scope={scope}
       sx={{
         ...cellSharedStyles,
@@ -149,33 +138,63 @@ export function VascoTh({
 
 export function VascoTd({
   children,
-  highlight,
+  isEditable,
   textAlign,
   tabIndex = 0,
-  "aria-hidden": ariaHidden = false,
+  "aria-hidden": ariaHidden,
 }: PropsWithChildren<{
-  highlight?: boolean;
+  isEditable?: boolean;
   textAlign?: CSS.Property.TextAlign;
   tabIndex?: number;
-  "aria-hidden"?: boolean;
+  "aria-hidden"?: boolean | undefined;
 }>) {
-  return (
+  return isEditable ? (
     <Td
+      color="brand.primary"
+      bgColor="surface.light.bg"
+      borderTop="1px"
+      borderBottom="0"
+      borderColor="gray.200"
+      padding="0"
+      textAlign={textAlign}
+    >
+      {children}
+    </Td>
+  ) : (
+    <Td
+      className={isEditable ? "editable" : undefined}
       tabIndex={tabIndex}
       textAlign={textAlign}
-      {...(ariaHidden
-        ? {
-            "aria-hidden": ariaHidden,
-          }
-        : {})}
+      aria-hidden={ariaHidden}
       sx={{
         ...cellSharedStyles,
-        ...(highlight
-          ? { bgColor: "surface.light.highlight", color: "brand.primary" }
-          : {}),
       }}
     >
       {children}
     </Td>
+  );
+}
+
+export function VascoTdInput({
+  defaultValue,
+  onChange,
+  "data-row-id": dataRow,
+  "data-cell-index": dataCell,
+}: InputProps & {
+  "data-row-id"?: string;
+  "data-cell-index"?: string;
+}) {
+  return (
+    <Input
+      defaultValue={defaultValue}
+      data-row-id={dataRow}
+      data-cell-index={dataCell}
+      bgColor="surface.light.highlight"
+      color="brand.primary"
+      onChange={onChange}
+      padding="8px 20px"
+      width="100%"
+      textAlign="end"
+    />
   );
 }

@@ -4,6 +4,7 @@ import {
   type MonthlyTargetMap,
   type MonthlyTargetKeys,
   ValueType,
+  MonthlyTargetKeysFiltered,
 } from "../../types";
 
 function getValueType(key: string): ValueType {
@@ -28,10 +29,7 @@ export function normalizeMonthlyTargets(
 ): MonthlyTargetMap {
   // Using a Map to guarantee the iteration order when mapping in JSX.
   // We don't want track the year in our Map, so we'll omit it.
-  const normalizedData = new Map<
-    keyof Omit<MonthlyTarget, "year">,
-    CellData[]
-  >();
+  const normalizedData = new Map<MonthlyTargetKeysFiltered, CellData[]>();
 
   data.forEach((monthlyTarget, index) => {
     // Create an array of keys from the object
@@ -81,4 +79,22 @@ export function normalizeMonthlyTargets(
   });
 
   return normalizedData;
+}
+
+export function updateTargetsTableData(
+  monthlyTargets: MonthlyTargetMap,
+  rowId: string,
+  cellIndex: string,
+  value: string,
+  callbackFn: (updatedMap: MonthlyTargetMap) => void
+) {
+  const newTargetsMap = new Map(monthlyTargets);
+  const newTargetsMapRow = newTargetsMap.get(
+    rowId as MonthlyTargetKeysFiltered
+  );
+
+  if (newTargetsMapRow) {
+    newTargetsMapRow[Number(cellIndex)]["value"] = Number(value);
+    callbackFn(newTargetsMap);
+  }
 }

@@ -41,3 +41,18 @@ export function displayValue(
       return value.toLocaleString();
   }
 }
+
+export function debounce(fn: (...args: any[]) => void, delay: number) {
+  let setTimeoutId: NodeJS.Timeout | null = null;
+
+  return function (this: ThisParameterType<typeof fn>, ...args: any[]) {
+    if (setTimeoutId !== null) {
+      clearTimeout(setTimeoutId);
+    }
+
+    setTimeoutId = setTimeout(() => {
+      fn.apply(this, args);
+      setTimeoutId = null;
+    }, delay);
+  };
+}
