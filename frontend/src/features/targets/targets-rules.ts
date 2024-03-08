@@ -186,15 +186,45 @@ export function updateMonthlyTargetsMap(
       monthIndex,
       value
     );
-    console.log(
-      ">>> getQuarterlyChurnedMMR",
-      getQuarterlyChurnedMMR(updatedMap, [0, 1, 2])
-    );
     callbackFn(updatedMap);
   }
 }
 
 // Quartely data related methods
+
+const quarterMapping = {
+  0: "Q1",
+  3: "Q2",
+  6: "Q3",
+  9: "Q4",
+};
+
+export type QuarterKeys = keyof typeof quarterMapping;
+
+export const quarterBeginningIndexes: QuarterKeys[] = [0, 3, 6, 9];
+
+export function getQuarterIndexesMapping(
+  monthIndex: keyof typeof quarterMapping
+) {
+  return quarterMapping[monthIndex];
+}
+
+// Get month indexes for the quarter
+export function getQuarterlyMonthIndexes(
+  startIndex: number
+): [number, number, number] {
+  let monthIndexes = [];
+
+  for (
+    let monthIndex = startIndex;
+    monthIndex <= startIndex + 2;
+    monthIndex++
+  ) {
+    monthIndexes.push(monthIndex);
+  }
+
+  return monthIndexes as [number, number, number];
+}
 
 // Get quarterly beginningMRR
 export function getQuarterlyBeginningMRR(
@@ -207,20 +237,13 @@ export function getQuarterlyBeginningMRR(
 // Get quarterly newBusinessMRR
 export function getQuarterlyNewBusinessMRR(
   monthlyTargets: MonthlyTargetMap,
-  quarterMonthStartIndex: number
+  monthIndexes: [number, number, number]
 ) {
-  let sum = 0;
+  const quarterlyNewBusinessMRR = monthIndexes.reduce((acc, monthIndex) => {
+    return acc + getValueFromMap(monthlyTargets, "newBusinessMRR", monthIndex);
+  }, 0);
 
-  // The sum of the 3 months of the quarter
-  for (
-    let monthIndex = quarterMonthStartIndex;
-    monthIndex <= quarterMonthStartIndex + 2;
-    monthIndex++
-  ) {
-    sum = sum + getValueFromMap(monthlyTargets, "newBusinessMRR", monthIndex);
-  }
-
-  return sum;
+  return quarterlyNewBusinessMRR;
 }
 
 // Get quarterly churn rate
@@ -228,18 +251,19 @@ export function getQuarterlyChurnRate(
   monthlyTargets: MonthlyTargetMap,
   monthIndexes: [number, number, number]
 ) {
-  return (
-    getQuarterlyChurnedMMR(monthlyTargets, monthIndexes) /
-    getQuarterlyAverageBeginningMMR(monthlyTargets, monthIndexes)
-  );
+  const quarterlyChurnRate =
+    getQuarterlyGrossChurnedMRR(monthlyTargets, monthIndexes) /
+    getQuarterlyAverageBeginningMRR(monthlyTargets, monthIndexes);
+
+  return quarterlyChurnRate;
 }
 
-// Get quarterlyChurnedMMR
-export function getQuarterlyChurnedMMR(
+// Get quarterlyGrossChurnedMRR
+export function getQuarterlyGrossChurnedMRR(
   monthlyTargets: MonthlyTargetMap,
   monthIndexes: [number, number, number]
 ) {
-  const quarterlyChurnedMMR = monthIndexes.reduce((acc, monthIndex) => {
+  const quarterlyGrossChurnedMRR = monthIndexes.reduce((acc, monthIndex) => {
     const value =
       getValueFromMap(monthlyTargets, "beginningMRR", monthIndex) *
       (getValueFromMap(monthlyTargets, "churnRate", monthIndex) / 100);
@@ -247,29 +271,26 @@ export function getQuarterlyChurnedMMR(
     return acc + value;
   }, 0);
 
-  console.log({ quarterlyChurnedMMR });
-
-  return quarterlyChurnedMMR;
+  return quarterlyGrossChurnedMRR;
 }
 
-// Get quarterlyExpansionMMR
-export function getQuarterlyExpansionMMR(
+// Get quarterlyExpansionMRR
+export function getQuarterlyExpansionMRR(
   monthlyTargets: MonthlyTargetMap,
   monthIndexes: [number, number, number]
 ) {
-  const quarterlyExpansionMMR = monthIndexes.reduce((acc, monthIndex) => {
+  const quarterlyExpansionMRR = monthIndexes.reduce((acc, monthIndex) => {
     const value =
       getValueFromMap(monthlyTargets, "beginningMRR", monthIndex) *
       (getValueFromMap(monthlyTargets, "expansionRate", monthIndex) / 100);
     return acc + value;
   }, 0);
 
-  console.log({ quarterlyExpansionMMR });
-  return quarterlyExpansionMMR;
+  return quarterlyExpansionMRR;
 }
 
-// get quarterlyAverageBeginningMMR
-export function getQuarterlyAverageBeginningMMR(
+// get quarterlyAverageBeginningMRR
+export function getQuarterlyAverageBeginningMRR(
   monthlyTargets: MonthlyTargetMap,
   monthIndexes: [number, number, number]
 ) {
@@ -277,27 +298,90 @@ export function getQuarterlyAverageBeginningMMR(
     return acc + getValueFromMap(monthlyTargets, "beginningMRR", monthIndex);
   }, 0);
 
-  return totalBeginningMRR / monthIndexes.length;
+  const quarterlyAverageBeginningMRR = totalBeginningMRR / monthIndexes.length;
+
+  return quarterlyAverageBeginningMRR;
 }
 
-export function updateQuarterlyTargetsMap(
-  monthlyTargets: MonthlyTargetMap
-): MonthlyTargetMap {
-  const quarterBeginningIndexes = [0, 3, 6, 9];
+// get quarterlyExpansionRate
+export function getQuarterlyExpansionRate(
+  monthlyTargets: MonthlyTargetMap,
+  monthIndexes: [number, number, number]
+) {
+  const quarterlyExpansionMRR = getQuarterlyExpansionMRR(
+    monthlyTargets,
+    monthIndexes
+  );
+  const quarterlyAverageBeginningMRR = getQuarterlyAverageBeginningMRR(
+    monthlyTargets,
+    monthIndexes
+  );
+  const quarterlyExpansionRate =
+    quarterlyExpansionMRR / quarterlyAverageBeginningMRR;
 
-  console.log("---------------");
+  return quarterlyExpansionRate;
+}
 
-  quarterBeginningIndexes.forEach((quarterIndex) => {
+// get quarterlyEndingMRR
+export function getQuarterlyEndingMRR(
+  monthlyTargets: MonthlyTargetMap,
+  monthIndexes: [number, number, number]
+) {
+  const lastMonthIndex = monthIndexes[monthIndexes.length - 1];
+
+  const quarterlyEndingMRR = getCurrentEndingMRR(
+    monthlyTargets,
+    lastMonthIndex
+  );
+
+  return quarterlyEndingMRR;
+}
+
+export function getQuarterlyTargets(monthlyTargets: MonthlyTargetMap) {
+  return quarterBeginningIndexes.map((quarterIndex) => {
+    const monthIndexes = getQuarterlyMonthIndexes(quarterIndex);
+
     const quarterlyBeginningMRR = getQuarterlyBeginningMRR(
       monthlyTargets,
       quarterIndex
     );
     const quarterlyNewBusinessMRR = getQuarterlyNewBusinessMRR(
       monthlyTargets,
-      quarterIndex
+      monthIndexes
     );
-    console.log({ quarterlyBeginningMRR, quarterlyNewBusinessMRR });
+    const quarterlyChurnRate = getQuarterlyChurnRate(
+      monthlyTargets,
+      monthIndexes
+    );
+    const quarterlyExpansionRate = getQuarterlyExpansionRate(
+      monthlyTargets,
+      monthIndexes
+    );
+    const quarterlyEndingMRR = getQuarterlyEndingMRR(
+      monthlyTargets,
+      monthIndexes
+    );
+    const quarterlyGrossChurnedMRR = getQuarterlyGrossChurnedMRR(
+      monthlyTargets,
+      monthIndexes
+    );
+    const quarterlyExpansionMRR = getQuarterlyExpansionMRR(
+      monthlyTargets,
+      monthIndexes
+    );
+    const quarterlyAverageBeginningMRR = getQuarterlyAverageBeginningMRR(
+      monthlyTargets,
+      monthIndexes
+    );
+    return {
+      beginningMRR: quarterlyBeginningMRR,
+      averageBeginningMRR: quarterlyAverageBeginningMRR,
+      newBusinessMRR: quarterlyNewBusinessMRR,
+      churnRate: quarterlyChurnRate,
+      grossChurnedMRR: quarterlyGrossChurnedMRR,
+      expansionRate: quarterlyExpansionRate,
+      expansionMRR: quarterlyExpansionMRR,
+      endingMRR: quarterlyEndingMRR,
+    };
   });
-
-  return monthlyTargets;
 }

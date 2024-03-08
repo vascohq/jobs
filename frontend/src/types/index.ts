@@ -8,6 +8,11 @@ export enum ValueType {
   Percentage = "percentage",
 }
 
+export enum PeriodType {
+  Monthly = "monthly",
+  Quarterly = "quarterly",
+}
+
 export type MonthlyTarget = {
   month: number;
   year: number;
@@ -24,30 +29,40 @@ export type CellDataCurrency = {
   id: string;
   value: number;
   valueType: ValueType.Currency;
+  isBenchmark: boolean;
+  periodType: PeriodType;
 };
 
 export type CellDataPercentage = {
   id: string;
   value: number;
   valueType: ValueType.Percentage;
+  isBenchmark: boolean;
+  periodType: PeriodType;
 };
 
 export type CellDataNumber = {
   id: string;
   value: number;
   valueType: ValueType.Number;
+  isBenchmark: boolean;
+  periodType: PeriodType;
 };
 
 export type CellDataDate = {
   id: string;
   value: Date;
   valueType: ValueType.Date;
+  isBenchmark: boolean;
+  periodType: PeriodType;
 };
 
 export type CellDataCopy = {
   id: string;
   value: string;
   valueType: ValueType.Copy;
+  isBenchmark: boolean;
+  periodType: PeriodType;
 };
 
 export type CellData =

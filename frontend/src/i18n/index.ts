@@ -10,6 +10,10 @@ const translations: Record<string, string> = {
   expansionRate: "Expansion Rate",
   expansionMRR: "Expansion MRR",
   endingMRR: "Ending MRR",
+  Q1: "Q1",
+  Q2: "Q2",
+  Q3: "Q3",
+  Q4: "Q4",
 };
 
 export function getTranslation(key: string) {

@@ -5,8 +5,13 @@ import {
   type MonthlyTargetKeys,
   ValueType,
   MonthlyTargetKeysFiltered,
+  PeriodType,
 } from "../../types";
-import { updateQuarterlyTargetsMap } from "./targets-rules";
+import {
+  getQuarterIndexesMapping,
+  getQuarterlyTargets,
+  quarterBeginningIndexes,
+} from "./targets-rules";
 
 function getValueType(key: string): ValueType {
   switch (key) {
@@ -67,10 +72,22 @@ export function normalizeMonthlyTargets(
           case ValueType.Currency:
           case ValueType.Number:
           case ValueType.Percentage:
-            cellData = { id, value, valueType };
+            cellData = {
+              id,
+              value,
+              valueType,
+              isBenchmark: false,
+              periodType: PeriodType.Monthly,
+            };
             break;
           case ValueType.Date:
-            cellData = { id, value: new Date(year, month - 1), valueType };
+            cellData = {
+              id,
+              value: new Date(year, month - 1),
+              valueType,
+              isBenchmark: false,
+              periodType: PeriodType.Monthly,
+            };
             break;
           default:
             throw new Error(`Unsupported ValueType: ${valueType}`);
@@ -89,9 +106,35 @@ export function normalizeQuarterlyTargets(
 ): MonthlyTargetMap {
   const newMonthlyTargetsMap = new Map(monthlyTargets);
 
-  const quarterlyTargets = updateQuarterlyTargetsMap(newMonthlyTargetsMap);
+  const quarterlyTargets = getQuarterlyTargets(newMonthlyTargetsMap);
 
-  // console.log({ quarterlyTargets });
+  quarterBeginningIndexes.forEach((monthIndex, quarterIndex) => {
+    // To reach the end of the quarter we need to monthIndex + 3 + index
+    // since we're adding items in row as we go
+    const targetIndex = monthIndex + 3 + quarterIndex;
 
-  return quarterlyTargets;
+    newMonthlyTargetsMap.forEach((cellData, key) => {
+      const quarterIndexValue = getQuarterIndexesMapping(monthIndex);
+      const isNumber = key === "churnRate" || key === "expansionRate";
+      if (key === "month") {
+        cellData.splice(targetIndex, 0, {
+          id: quarterIndexValue,
+          value: quarterIndexValue,
+          valueType: ValueType.Copy,
+          periodType: PeriodType.Quarterly,
+          isBenchmark: false,
+        });
+      } else {
+        cellData.splice(targetIndex, 0, {
+          id: `${key}-${quarterIndexValue}`,
+          value: quarterlyTargets[quarterIndex][key],
+          valueType: isNumber ? ValueType.Number : ValueType.Currency,
+          periodType: PeriodType.Quarterly,
+          isBenchmark: false,
+        });
+      }
+    });
+  });
+
+  return newMonthlyTargetsMap;
 }
