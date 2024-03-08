@@ -13,6 +13,8 @@ function getValueType(key: string): ValueType {
     case "beginningMRR":
     case "newBusinessMRR":
     case "endingMRR":
+    case "grossChurnedMRR":
+    case "expansionMRR":
       return ValueType.Currency;
     case "churnRate":
     case "expansionRate":
