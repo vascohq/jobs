@@ -13,9 +13,9 @@ import {
 } from "../../components/table";
 import { ValueType, MonthlyTargetMap } from "../../types";
 import { debounce, displayValue } from "../../utils";
-import { updateTargetsMap } from "./normalizer";
+import { updateMonthlyTargetsMap } from "./normalizer";
 
-const update = debounce(updateTargetsMap, 1000);
+const update = debounce(updateMonthlyTargetsMap, 1000);
 
 export function TargetsTable({
   normalizedMonthlyTargets,

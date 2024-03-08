@@ -166,9 +166,7 @@ export function VascoTd({
       tabIndex={tabIndex}
       textAlign={textAlign}
       aria-hidden={ariaHidden}
-      sx={{
-        ...cellSharedStyles,
-      }}
+      sx={{ ...cellSharedStyles }}
     >
       {children}
     </Td>

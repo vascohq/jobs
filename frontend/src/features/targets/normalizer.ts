@@ -243,7 +243,7 @@ function updateMapFromNewBunisessMRR(
   return newTargetsMap;
 }
 
-export function updateTargetsMap(
+export function updateMonthlyTargetsMap(
   monthlyTargets: MonthlyTargetMap,
   rowId: MonthlyTargetKeysFiltered,
   cellIndex: string,
