@@ -26,9 +26,7 @@ export function TargetsTable({
     normalizedMonthlyTargets
   );
 
-  const handleEditCell = (event: ChangeEvent<HTMLInputElement>) => {
-    const { dataset, value } = event.target;
-    const { rowId, cellIndex } = dataset;
+  const handleEditCell = (rowId: string, cellIndex: string, value: string) => {
     update(monthlyTargets, rowId, cellIndex, value, setMonthlyTargets);
   };
 
@@ -95,9 +93,6 @@ export function TargetsTable({
                 {cells.map(({ id, value, valueType }, index) => {
                   const isEditable =
                     rowId === "newBusinessMRR" && typeof value !== "object";
-                  const isNumber =
-                    valueType === ValueType.Currency ||
-                    valueType === ValueType.Number;
                   return (
                     <VascoTd key={id} isEditable={isEditable} textAlign="end">
                       {isEditable ? (
@@ -106,7 +101,10 @@ export function TargetsTable({
                           data-cell-index={index.toString()}
                           defaultValue={value}
                           onChange={handleEditCell}
-                          {...(isNumber ? { type: "number" } : {})}
+                          valueType={valueType}
+                          {...(valueType === ValueType.Number
+                            ? { type: "number" }
+                            : { type: "text" })}
                         />
                       ) : (
                         displayValue(value, valueType)

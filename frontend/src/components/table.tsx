@@ -1,4 +1,4 @@
-import { type PropsWithChildren } from "react";
+import { ChangeEvent, useState, type PropsWithChildren } from "react";
 import type * as CSS from "csstype";
 
 import {
@@ -12,6 +12,8 @@ import {
   Thead,
   Tr,
 } from "@chakra-ui/react";
+import { currency } from "../utils";
+import { ValueType } from "../types";
 
 // This is my mini UI component library
 // built on top on Chakra UI, we only expose
@@ -179,20 +181,47 @@ export function VascoTdInput({
   defaultValue,
   onChange,
   type,
+  valueType,
   "data-row-id": dataRow,
   "data-cell-index": dataCell,
-}: InputProps & {
+}: {
+  defaultValue: string | number;
+  onChange?: (rowId: string, cellIndex: string, value: string) => void;
+  type: "number" | "text"; // subset will do for now
+  valueType: ValueType;
   "data-row-id"?: string;
   "data-cell-index"?: string;
 }) {
+  const [value, setValue] = useState(() =>
+    valueType === ValueType.Currency
+      ? currency.format(defaultValue as number)
+      : defaultValue
+  );
+
+  const handleOnChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const { dataset, value } = event.target;
+    const { rowId, cellIndex } = dataset;
+
+    if (onChange && rowId && cellIndex && value) {
+      if (valueType === ValueType.Currency) {
+        const cleanValue = value.replace(/[^0-9.-]+/g, "");
+        setValue(currency.format(Number(cleanValue)));
+        onChange(rowId, cellIndex, cleanValue);
+      } else {
+        setValue(value);
+        onChange(rowId, cellIndex, value);
+      }
+    }
+  };
+
   return (
     <Input
-      defaultValue={defaultValue}
+      value={value}
       data-row-id={dataRow}
       data-cell-index={dataCell}
       bgColor="surface.light.highlight"
       color="brand.primary"
-      onChange={onChange}
+      onChange={handleOnChange}
       padding="8px 20px"
       width="100%"
       minWidth="100%"
