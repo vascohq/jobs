@@ -81,20 +81,183 @@ export function normalizeMonthlyTargets(
   return normalizedData;
 }
 
-export function updateTargetsTableData(
+// Get endingMRR
+export function getEndingMRR(
+  beginningMRR: number,
+  newBusinessMRR: number,
+  grossChurnedMRR: number,
+  expansionMRR: number
+) {
+  return beginningMRR + newBusinessMRR + grossChurnedMRR + expansionMRR;
+}
+
+// Get grossChurnedMRR
+export function getChurnedMRR(beginningMRR: number, churnRate: number) {
+  return beginningMRR * (churnRate / 100) * -1;
+}
+
+// Get expansionMRR
+export function getExpansionMRR(beginningMRR: number, expansionRate: number) {
+  return beginningMRR * (expansionRate / 100);
+}
+
+// Get a specific cell
+function getCellFromMap(
+  newTargetsMap: MonthlyTargetMap,
+  key: MonthlyTargetKeysFiltered,
+  monthIndex: number
+) {
+  const cellData = newTargetsMap.get(key) as CellData[];
+  return cellData[Number(monthIndex)];
+}
+
+// Get value from a specific cell
+function getValueFromMap(
+  newTargetsMap: MonthlyTargetMap,
+  key: MonthlyTargetKeysFiltered,
+  monthIndex: number
+) {
+  return getCellFromMap(newTargetsMap, key, monthIndex).value as number;
+}
+
+// Update value in a cell in the Map
+function updateValueInMap(
+  newTargetsMap: MonthlyTargetMap,
+  key: MonthlyTargetKeysFiltered,
+  monthIndex: number,
+  value: number
+) {
+  const cellData = newTargetsMap.get(key);
+  if (cellData) return (cellData[Number(monthIndex)].value = value);
+}
+
+function updateMapFromNewEndingMRR(
+  targetsMap: MonthlyTargetMap,
+  endingMRRValue: number,
+  monthIndex: number
+) {
+  // Create a new Map to work it
+  const newTargetsMap = new Map(targetsMap);
+
+  // Update endingMRR in Map
+  updateValueInMap(newTargetsMap, "endingMRR", monthIndex, endingMRRValue);
+
+  // Need to update the other values, derived from endingMRR update
+  // First the beginningMRR for the next month
+  // If next month available, update accordingly
+  const nextIndex = monthIndex + 1;
+  const nextMonthBeginningMRRCell = getCellFromMap(
+    newTargetsMap,
+    "beginningMRR",
+    nextIndex
+  );
+
+  // Is there a next month?
+  if (nextMonthBeginningMRRCell) {
+    // Update the beginningMRR
+    nextMonthBeginningMRRCell.value = endingMRRValue;
+
+    // Update the churnedMRR
+    const nextMonthChurnedMRRValue = getChurnedMRR(
+      nextMonthBeginningMRRCell.value,
+      getValueFromMap(newTargetsMap, "churnRate", nextIndex)
+    );
+
+    updateValueInMap(
+      newTargetsMap,
+      "grossChurnedMRR",
+      nextIndex,
+      nextMonthChurnedMRRValue
+    );
+
+    // Update the expansionMRR
+    const nextMonthExpansionMRRValue = getExpansionMRR(
+      nextMonthBeginningMRRCell.value,
+      getValueFromMap(newTargetsMap, "expansionRate", nextIndex)
+    );
+
+    updateValueInMap(
+      newTargetsMap,
+      "expansionMRR",
+      nextIndex,
+      nextMonthExpansionMRRValue
+    );
+
+    // Update the nexts months recursively
+    const endingMRR = getCurrentEndingMRR(newTargetsMap, nextIndex);
+    return updateMapFromNewEndingMRR(newTargetsMap, endingMRR, nextIndex);
+  }
+
+  // Return updated Map
+  return newTargetsMap;
+}
+
+function getEndingMRRFromNewBunessMRR(
   monthlyTargets: MonthlyTargetMap,
-  rowId: string,
+  monthIndex: number,
+  value: string
+) {
+  const endingMRRValue = getEndingMRR(
+    getValueFromMap(monthlyTargets, "beginningMRR", monthIndex),
+    Number(value),
+    getValueFromMap(monthlyTargets, "grossChurnedMRR", monthIndex),
+    getValueFromMap(monthlyTargets, "expansionMRR", monthIndex)
+  );
+
+  return endingMRRValue;
+}
+
+function getCurrentEndingMRR(
+  monthlyTargets: MonthlyTargetMap,
+  monthIndex: number
+) {
+  const endingMRRValue = getEndingMRR(
+    getValueFromMap(monthlyTargets, "beginningMRR", monthIndex),
+    getValueFromMap(monthlyTargets, "newBusinessMRR", monthIndex),
+    getValueFromMap(monthlyTargets, "grossChurnedMRR", monthIndex),
+    getValueFromMap(monthlyTargets, "expansionMRR", monthIndex)
+  );
+
+  return endingMRRValue;
+}
+
+function updateMapFromNewBunisessMRR(
+  monthlyTargets: MonthlyTargetMap,
+  monthIndex: number,
+  value: string
+) {
+  // Get updated endingMRR first, derived from newBusinessMRR edits
+  const endingMRRValue = getEndingMRRFromNewBunessMRR(
+    monthlyTargets,
+    monthIndex,
+    value
+  );
+
+  // Get updated map, derived from new updated endingMRR
+  const newTargetsMap = updateMapFromNewEndingMRR(
+    monthlyTargets,
+    endingMRRValue,
+    monthIndex
+  );
+
+  return newTargetsMap;
+}
+
+export function updateTargetsMap(
+  monthlyTargets: MonthlyTargetMap,
+  rowId: MonthlyTargetKeysFiltered,
   cellIndex: string,
   value: string,
   callbackFn: (updatedMap: MonthlyTargetMap) => void
 ) {
-  const newTargetsMap = new Map(monthlyTargets);
-  const newTargetsMapRow = newTargetsMap.get(
-    rowId as MonthlyTargetKeysFiltered
-  );
+  const monthIndex = Number(cellIndex);
 
-  if (newTargetsMapRow) {
-    newTargetsMapRow[Number(cellIndex)]["value"] = Number(value);
-    callbackFn(newTargetsMap);
+  if (rowId === "newBusinessMRR") {
+    const updatedMap = updateMapFromNewBunisessMRR(
+      monthlyTargets,
+      monthIndex,
+      value
+    );
+    callbackFn(updatedMap);
   }
 }

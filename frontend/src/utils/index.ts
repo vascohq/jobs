@@ -14,6 +14,8 @@ export const percent = new Intl.NumberFormat("en-US", {
 
 export const number = new Intl.NumberFormat("en-US", {
   style: "decimal",
+  minimumFractionDigits: 0,
+  maximumFractionDigits: 0,
 });
 
 export const dateFormatter = new Intl.DateTimeFormat("en-US", {

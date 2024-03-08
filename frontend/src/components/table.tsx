@@ -178,6 +178,7 @@ export function VascoTd({
 export function VascoTdInput({
   defaultValue,
   onChange,
+  type,
   "data-row-id": dataRow,
   "data-cell-index": dataCell,
 }: InputProps & {
@@ -194,7 +195,9 @@ export function VascoTdInput({
       onChange={onChange}
       padding="8px 20px"
       width="100%"
+      minWidth="100%"
       textAlign="end"
+      type={type}
     />
   );
 }

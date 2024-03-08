@@ -13,9 +13,9 @@ import {
 } from "../../components/table";
 import { ValueType, MonthlyTargetMap } from "../../types";
 import { debounce, displayValue } from "../../utils";
-import { updateTargetsTableData } from "./normalizer";
+import { updateTargetsMap } from "./normalizer";
 
-const update = debounce(updateTargetsTableData, 500);
+const update = debounce(updateTargetsMap, 1000);
 
 export function TargetsTable({
   normalizedMonthlyTargets,
@@ -34,7 +34,7 @@ export function TargetsTable({
 
   const targets = Array.from(monthlyTargets);
 
-  console.log("monthly targets", targets);
+  // console.log("monthly targets", targets);
 
   // Need to extract the first cells of the first row
   // in order to use the months as th cells
@@ -95,6 +95,9 @@ export function TargetsTable({
                 {cells.map(({ id, value, valueType }, index) => {
                   const isEditable =
                     rowId === "newBusinessMRR" && typeof value !== "object";
+                  const isNumber =
+                    valueType === ValueType.Currency ||
+                    valueType === ValueType.Number;
                   return (
                     <VascoTd key={id} isEditable={isEditable} textAlign="end">
                       {isEditable ? (
@@ -103,6 +106,7 @@ export function TargetsTable({
                           data-cell-index={index.toString()}
                           defaultValue={value}
                           onChange={handleEditCell}
+                          {...(isNumber ? { type: "number" } : {})}
                         />
                       ) : (
                         displayValue(value, valueType)
