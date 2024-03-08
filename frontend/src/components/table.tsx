@@ -93,20 +93,33 @@ const cellSharedStyles = {
   },
 };
 
+const cellSharedHeadingStyles = {
+  bgColor: "gray.50",
+};
+
+const cellSharedHeadingBorders = {
+  borderLeft: "1px",
+  borderRight: "1px",
+  borderLeftColor: "gray.200",
+  borderRightColor: "gray.200",
+};
+
 export function VascoTh({
   children,
-  bgColor,
   fontWeight,
   scope,
   textAlign,
   tabIndex = 0,
+  withHeadingBg,
+  withBorders,
   "aria-hidden": ariaHidden,
 }: PropsWithChildren<{
   scope?: "row" | "col";
-  bgColor?: CSS.Property.BackgroundColor;
   fontWeight?: CSS.Property.FontWeight;
   textAlign?: CSS.Property.TextAlign;
   tabIndex?: number;
+  withHeadingBg?: boolean;
+  withBorders?: boolean;
   "aria-hidden"?: boolean | undefined;
 }>) {
   return (
@@ -126,11 +139,12 @@ export function VascoTh({
           position: "sticky",
           left: 0,
         },
-        ...(bgColor ? { bgColor } : {}),
         fontWeight: fontWeight || "400",
         fontSize: "md",
         textTransform: "capitalize",
         letterSpacing: 0,
+        ...(withHeadingBg ? { ...cellSharedHeadingStyles } : {}),
+        ...(withBorders ? { ...cellSharedHeadingBorders } : {}),
       }}
     >
       {children}
@@ -141,13 +155,15 @@ export function VascoTh({
 export function VascoTd({
   children,
   isEditable,
-  isHeading,
+  withHeadingBg,
+  withBorders,
   textAlign,
   tabIndex = 0,
   "aria-hidden": ariaHidden,
 }: PropsWithChildren<{
   isEditable?: boolean;
-  isHeading?: boolean;
+  withHeadingBg?: boolean;
+  withBorders?: boolean;
   textAlign?: CSS.Property.TextAlign;
   tabIndex?: number;
   "aria-hidden"?: boolean | undefined;
@@ -166,22 +182,13 @@ export function VascoTd({
     </Td>
   ) : (
     <Td
-      className={isEditable ? "editable" : undefined}
       tabIndex={tabIndex}
       textAlign={textAlign}
       aria-hidden={ariaHidden}
       sx={{
-        ...(isHeading
-          ? {
-              bgColor: "gray.50",
-              borderLeft: "1px",
-              borderRight: "1px",
-              borderTop: "0",
-              borderBottom: "0",
-              borderColor: "gray.50",
-            }
-          : {}),
         ...cellSharedStyles,
+        ...(withHeadingBg ? { ...cellSharedHeadingStyles } : {}),
+        ...(withBorders ? { ...cellSharedHeadingBorders } : {}),
       }}
     >
       {children}
