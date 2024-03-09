@@ -2,6 +2,8 @@ import {
   type CellData,
   type MonthlyTargetMap,
   MonthlyTargetKeysFiltered,
+  ValueType,
+  PeriodType,
 } from "../../types";
 
 // Get endingMRR
@@ -16,12 +18,12 @@ export function getEndingMRR(
 
 // Get grossChurnedMRR
 export function getChurnedMRR(beginningMRR: number, churnRate: number) {
-  return beginningMRR * (churnRate / 100) * -1;
+  return beginningMRR * churnRate * -1;
 }
 
 // Get expansionMRR
 export function getExpansionMRR(beginningMRR: number, expansionRate: number) {
-  return beginningMRR * (expansionRate / 100);
+  return beginningMRR * expansionRate;
 }
 
 // Get a specific cell
@@ -80,7 +82,7 @@ function updateMapFromNewEndingMRR(
     // Update the beginningMRR
     nextMonthBeginningMRRCell.value = endingMRRValue;
 
-    // Update the churnedMRR
+    // Update the grossChurnedMRR
     const nextMonthChurnedMRRValue = getChurnedMRR(
       nextMonthBeginningMRRCell.value,
       getValueFromMap(newTargetsMap, "churnRate", nextIndex)
@@ -169,27 +171,6 @@ function updateMapFromNewBunisessMRR(
   return newTargetsMap;
 }
 
-// Update monthly targets from edits
-export function updateMonthlyTargetsMap(
-  monthlyTargets: MonthlyTargetMap,
-  rowId: MonthlyTargetKeysFiltered,
-  cellIndex: string,
-  value: string,
-  callbackFn: (updatedMap: MonthlyTargetMap) => void
-) {
-  const monthIndex = Number(cellIndex);
-
-  // If newBusinessMRR was edited update accordingly
-  if (rowId === "newBusinessMRR") {
-    const updatedMap = updateMapFromNewBunisessMRR(
-      monthlyTargets,
-      monthIndex,
-      value
-    );
-    callbackFn(updatedMap);
-  }
-}
-
 // Quartely data related methods
 
 const quarterMapping = {
@@ -266,7 +247,7 @@ export function getQuarterlyGrossChurnedMRR(
   const quarterlyGrossChurnedMRR = monthIndexes.reduce((acc, monthIndex) => {
     const value =
       getValueFromMap(monthlyTargets, "beginningMRR", monthIndex) *
-      (getValueFromMap(monthlyTargets, "churnRate", monthIndex) / 100);
+      getValueFromMap(monthlyTargets, "churnRate", monthIndex);
 
     return acc + value;
   }, 0);
@@ -282,7 +263,7 @@ export function getQuarterlyExpansionMRR(
   const quarterlyExpansionMRR = monthIndexes.reduce((acc, monthIndex) => {
     const value =
       getValueFromMap(monthlyTargets, "beginningMRR", monthIndex) *
-      (getValueFromMap(monthlyTargets, "expansionRate", monthIndex) / 100);
+      getValueFromMap(monthlyTargets, "expansionRate", monthIndex);
     return acc + value;
   }, 0);
 
@@ -298,7 +279,7 @@ export function getQuarterlyAverageBeginningMRR(
     return acc + getValueFromMap(monthlyTargets, "beginningMRR", monthIndex);
   }, 0);
 
-  const quarterlyAverageBeginningMRR = totalBeginningMRR / monthIndexes.length;
+  const quarterlyAverageBeginningMRR = totalBeginningMRR / monthIndexes.length; // README says * -1, could this be wrong?
 
   return quarterlyAverageBeginningMRR;
 }
@@ -385,4 +366,69 @@ export function getQuarterlyTargets(monthlyTargets: MonthlyTargetMap) {
     };
     return quarterlyTargets;
   });
+}
+
+// Main update functions
+
+// Update monthly targets from edits
+export function updateMonthlyTargetsMap(
+  monthlyTargets: MonthlyTargetMap,
+  rowId: MonthlyTargetKeysFiltered,
+  cellIndex: string,
+  value: string,
+  callbackFn: (updatedMap: MonthlyTargetMap) => void
+) {
+  const monthIndex = Number(cellIndex);
+
+  // If newBusinessMRR was edited update accordingly
+  if (rowId === "newBusinessMRR") {
+    const updatedMonthlyMap = updateMapFromNewBunisessMRR(
+      monthlyTargets,
+      monthIndex,
+      value
+    );
+
+    const updatedMap = updateQuarterlyTargets(updatedMonthlyMap);
+
+    callbackFn(updatedMap);
+  }
+}
+
+export function updateQuarterlyTargets(
+  monthlyTargets: MonthlyTargetMap,
+  initial?: boolean
+): MonthlyTargetMap {
+  const newMonthlyTargetsMap = new Map(monthlyTargets);
+
+  const quarterlyTargets = getQuarterlyTargets(newMonthlyTargetsMap);
+
+  quarterBeginningIndexes.forEach((monthIndex, quarterIndex) => {
+    // To reach the end of the quarter we need to monthIndex + 3 + index
+    // since we're adding items in row as we go
+    const targetIndex = monthIndex + 3 + quarterIndex;
+
+    newMonthlyTargetsMap.forEach((cellData, key) => {
+      const quarterIndexValue = getQuarterIndexesMapping(monthIndex);
+      const isNumber = key === "churnRate" || key === "expansionRate";
+      if (key === "month") {
+        cellData.splice(targetIndex, initial ? 0 : 1, {
+          id: quarterIndexValue,
+          value: quarterIndexValue,
+          valueType: ValueType.Copy,
+          periodType: PeriodType.Quarterly,
+          isBenchmark: false,
+        });
+      } else {
+        cellData.splice(targetIndex, initial ? 0 : 1, {
+          id: `${key}-${quarterIndexValue}`,
+          value: quarterlyTargets[quarterIndex][key],
+          valueType: isNumber ? ValueType.Percentage : ValueType.Currency,
+          periodType: PeriodType.Quarterly,
+          isBenchmark: false,
+        });
+      }
+    });
+  });
+
+  return newMonthlyTargetsMap;
 }

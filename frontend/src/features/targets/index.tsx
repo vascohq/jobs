@@ -1,10 +1,8 @@
 import { useMemo } from "react";
-import {
-  normalizeMonthlyTargets,
-  normalizeQuarterlyTargets,
-} from "./targets-normalizer";
+import { normalizeMonthlyTargets } from "./targets-normalizer";
 import { useMonthyTargets } from "../../client";
 import { TargetsTable } from "./targets-table";
+import { updateQuarterlyTargets } from "./targets-rules";
 
 export function Targets() {
   // Fetching data from server
@@ -14,7 +12,10 @@ export function Targets() {
   // TODO: Revisit this approach when implementing cell editing
   const normalizedMonthlyTargets = useMemo(() => {
     if (monthlyTargets) {
-      return normalizeQuarterlyTargets(normalizeMonthlyTargets(monthlyTargets));
+      return updateQuarterlyTargets(
+        normalizeMonthlyTargets(monthlyTargets),
+        true
+      );
     }
     return null;
   }, [monthlyTargets]);

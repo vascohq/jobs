@@ -7,11 +7,6 @@ import {
   MonthlyTargetKeysFiltered,
   PeriodType,
 } from "../../types";
-import {
-  getQuarterIndexesMapping,
-  getQuarterlyTargets,
-  quarterBeginningIndexes,
-} from "./targets-rules";
 
 function getValueType(key: string): ValueType {
   switch (key) {
@@ -71,10 +66,18 @@ export function normalizeMonthlyTargets(
         switch (valueType) {
           case ValueType.Currency:
           case ValueType.Number:
+            cellData = {
+              id,
+              value: value,
+              valueType,
+              isBenchmark: false,
+              periodType: PeriodType.Monthly,
+            };
+            break;
           case ValueType.Percentage:
             cellData = {
               id,
-              value,
+              value: value / 100,
               valueType,
               isBenchmark: false,
               periodType: PeriodType.Monthly,
@@ -99,44 +102,4 @@ export function normalizeMonthlyTargets(
   });
 
   return normalizedData;
-}
-
-export function normalizeQuarterlyTargets(
-  monthlyTargets: MonthlyTargetMap
-): MonthlyTargetMap {
-  const newMonthlyTargetsMap = new Map(monthlyTargets);
-
-  const quarterlyTargets = getQuarterlyTargets(newMonthlyTargetsMap);
-
-  quarterBeginningIndexes.forEach((monthIndex, quarterIndex) => {
-    // To reach the end of the quarter we need to monthIndex + 3 + index
-    // since we're adding items in row as we go
-    const targetIndex = monthIndex + 3 + quarterIndex;
-
-    newMonthlyTargetsMap.forEach((cellData, key) => {
-      const quarterIndexValue = getQuarterIndexesMapping(monthIndex);
-      const isNumber = key === "churnRate" || key === "expansionRate";
-      if (key === "month") {
-        cellData.splice(targetIndex, 0, {
-          id: quarterIndexValue,
-          value: quarterIndexValue,
-          valueType: ValueType.Copy,
-          periodType: PeriodType.Quarterly,
-          isBenchmark: false,
-        });
-      } else {
-        cellData.splice(targetIndex, 0, {
-          id: `${key}-${quarterIndexValue}`,
-          value: quarterlyTargets[quarterIndex][key],
-          valueType: isNumber ? ValueType.Number : ValueType.Currency,
-          periodType: PeriodType.Quarterly,
-          isBenchmark: false,
-        });
-      }
-    });
-  });
-
-  console.log({ newMonthlyTargetsMap, quarterlyTargets });
-
-  return newMonthlyTargetsMap;
 }

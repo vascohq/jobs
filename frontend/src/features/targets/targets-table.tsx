@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from "react";
+import { useState } from "react";
 import { VisuallyHidden } from "@chakra-ui/react";
 import {
   VascoTable,
@@ -23,7 +23,7 @@ export function TargetsTable({
   normalizedMonthlyTargets: MonthlyTargetMap;
 }) {
   const [monthlyTargets, setMonthlyTargets] = useState(
-    normalizedMonthlyTargets
+    () => normalizedMonthlyTargets
   );
 
   const handleEditCell = (rowId: string, cellIndex: string, value: string) => {
@@ -31,8 +31,6 @@ export function TargetsTable({
   };
 
   const targets = Array.from(monthlyTargets);
-
-  // console.log("monthly targets", targets);
 
   // Need to extract the first cells of the first row
   // in order to use the months as th cells
