@@ -9,7 +9,6 @@ export function Targets() {
   const { data: monthlyTargets } = useMonthyTargets();
 
   // Memoize results from normalization function
-  // TODO: Revisit this approach when implementing cell editing
   const normalizedMonthlyTargets = useMemo(() => {
     if (monthlyTargets) {
       return updateQuarterlyTargets(
