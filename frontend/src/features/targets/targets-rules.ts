@@ -121,11 +121,11 @@ function updateMapFromNewEndingMRR(
 function getEndingMRRFromNewBunessMRR(
   monthlyTargets: MonthlyTargetMap,
   monthIndex: number,
-  value: string
+  value: number
 ) {
   const endingMRRValue = getEndingMRR(
     getValueFromMap(monthlyTargets, "beginningMRR", monthIndex),
-    Number(value),
+    value,
     getValueFromMap(monthlyTargets, "grossChurnedMRR", monthIndex),
     getValueFromMap(monthlyTargets, "expansionMRR", monthIndex)
   );
@@ -152,8 +152,11 @@ function getCurrentEndingMRR(
 function updateMapFromNewBunisessMRR(
   monthlyTargets: MonthlyTargetMap,
   monthIndex: number,
-  value: string
+  value: number
 ) {
+  // Update newBusinessMRR
+  updateValueInMap(monthlyTargets, "newBusinessMRR", monthIndex, value);
+
   // Get updated endingMRR first, derived from newBusinessMRR edits
   const endingMRRValue = getEndingMRRFromNewBunessMRR(
     monthlyTargets,
@@ -387,7 +390,7 @@ export function updateMonthlyTargetsMap(
     const updatedMonthlyMap = updateMapFromNewBunisessMRR(
       monthlyTargets,
       monthIndex,
-      value
+      Number(value)
     );
 
     const updatedMap = updateQuarterlyTargets(updatedMonthlyMap);
