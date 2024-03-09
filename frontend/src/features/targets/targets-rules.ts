@@ -233,8 +233,9 @@ export function getQuarterlyChurnRate(
   monthIndexes: [number, number, number]
 ) {
   const quarterlyChurnRate =
-    getQuarterlyGrossChurnedMRR(monthlyTargets, monthIndexes) /
-    getQuarterlyAverageBeginningMRR(monthlyTargets, monthIndexes);
+    (getQuarterlyGrossChurnedMRR(monthlyTargets, monthIndexes) /
+      getQuarterlyAverageBeginningMRR(monthlyTargets, monthIndexes)) *
+    -1;
 
   return quarterlyChurnRate;
 }
@@ -252,7 +253,7 @@ export function getQuarterlyGrossChurnedMRR(
     return acc + value;
   }, 0);
 
-  return quarterlyGrossChurnedMRR;
+  return quarterlyGrossChurnedMRR * -1;
 }
 
 // Get quarterlyExpansionMRR
@@ -310,8 +311,9 @@ export function getQuarterlyEndingMRR(
 ) {
   const lastMonthIndex = monthIndexes[monthIndexes.length - 1];
 
-  const quarterlyEndingMRR = getCurrentEndingMRR(
+  const quarterlyEndingMRR = getValueFromMap(
     monthlyTargets,
+    "endingMRR",
     lastMonthIndex
   );
 
