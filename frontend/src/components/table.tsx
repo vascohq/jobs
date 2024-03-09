@@ -86,8 +86,9 @@ const cellSharedStyles = {
   minWidth: "150px",
   _last: {
     position: "sticky",
-    right: 0,
-    width: 0,
+    right: "0",
+    width: "0",
+    minWidth: "0",
     padding: "0",
     boxShadow: "0px 10px 15px 5px rgba(184,184,184,0.25)",
   },
