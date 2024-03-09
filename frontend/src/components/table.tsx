@@ -11,7 +11,7 @@ import {
   Thead,
   Tr,
 } from "@chakra-ui/react";
-import { currency } from "../utils";
+import { currency, isNumber } from "../utils";
 import { ValueType } from "../types";
 
 // This is my mini UI component library
@@ -225,8 +225,10 @@ export function VascoTdInput({
     if (onChange && rowId && cellIndex && value) {
       if (valueType === ValueType.Currency) {
         const cleanValue = value.replace(/[^0-9.-]+/g, "");
-        setValue(currency.format(Number(cleanValue)));
-        onChange(rowId, cellIndex, cleanValue);
+        if (isNumber(cleanValue)) {
+          setValue(currency.format(Number(cleanValue)));
+          onChange(rowId, cellIndex, cleanValue);
+        }
       } else {
         setValue(value);
         onChange(rowId, cellIndex, value);

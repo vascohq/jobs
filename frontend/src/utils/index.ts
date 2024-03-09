@@ -58,3 +58,7 @@ export function debounce(fn: (...args: any[]) => void, delay: number) {
     }, delay);
   };
 }
+
+export const isNumber = (val: string) => {
+  return !isNaN(parseFloat(val)) && isFinite(Number(val));
+};
