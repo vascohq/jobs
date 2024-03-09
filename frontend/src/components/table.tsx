@@ -82,7 +82,8 @@ const cellSharedStyles = {
   borderTop: "1px",
   borderBottom: 0,
   borderColor: "gray.200",
-  padding: "8px 20px 8px 60px",
+  padding: "8px 20px 8px 20px",
+  minWidth: "150px",
   _last: {
     position: "sticky",
     right: 0,
@@ -175,6 +176,7 @@ export function VascoTd({
       borderColor="gray.200"
       padding="0"
       textAlign={textAlign}
+      minWidth="150px"
     >
       {children}
     </Td>
@@ -241,7 +243,6 @@ export function VascoTdInput({
       onChange={handleOnChange}
       padding="8px 20px"
       width="100%"
-      minWidth="100%"
       textAlign="end"
       type={type}
     />
