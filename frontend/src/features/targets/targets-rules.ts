@@ -21,9 +21,19 @@ export function getChurnedMRR(beginningMRR: number, churnRate: number) {
   return beginningMRR * churnRate * -1;
 }
 
+// Get churn rate from grossChurnedMRR
+export function getChurnRate(beginningMRR: number, grossChurnedMRR: number) {
+  return -grossChurnedMRR / beginningMRR;
+}
+
 // Get expansionMRR
 export function getExpansionMRR(beginningMRR: number, expansionRate: number) {
   return beginningMRR * expansionRate;
+}
+
+// Get expansion rate from expansionMRR
+export function getExpansionRate(beginningMRR: number, expansionMRR: number) {
+  return expansionMRR / beginningMRR;
 }
 
 // Get a specific cell
@@ -92,31 +102,23 @@ function updateMapFromNewEndingMRR(
     // Update the beginningMRR
     nextMonthBeginningMRRCell.value = endingMRRValue;
 
-    // Update the grossChurnedMRR
-    const nextMonthChurnedMRRValue = getChurnedMRR(
-      nextMonthBeginningMRRCell.value,
-      getValueFromMap(newTargetsMap, "churnRate", nextIndex)
-    );
-
-    updateValueInMap(
+    // Update churnRate in Map
+    const grossChurnedMRR = getValueFromMap(
       newTargetsMap,
       "grossChurnedMRR",
-      nextIndex,
-      nextMonthChurnedMRRValue
+      nextIndex
     );
+    const churnRate = getChurnRate(endingMRRValue, grossChurnedMRR);
+    updateValueInMap(newTargetsMap, "churnRate", nextIndex, churnRate);
 
-    // Update the expansionMRR
-    const nextMonthExpansionMRRValue = getExpansionMRR(
-      nextMonthBeginningMRRCell.value,
-      getValueFromMap(newTargetsMap, "expansionRate", nextIndex)
-    );
-
-    updateValueInMap(
+    // Update expansionRate in Map
+    const expansionMRR = getValueFromMap(
       newTargetsMap,
       "expansionMRR",
-      nextIndex,
-      nextMonthExpansionMRRValue
+      nextIndex
     );
+    const expansionRate = getExpansionRate(endingMRRValue, expansionMRR);
+    updateValueInMap(newTargetsMap, "expansionRate", nextIndex, expansionRate);
 
     // Update the nexts months recursively
     const endingMRR = getCurrentEndingMRR(newTargetsMap, nextIndex);
