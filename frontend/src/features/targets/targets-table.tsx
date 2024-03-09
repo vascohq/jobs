@@ -47,7 +47,7 @@ export function TargetsTable({
             <VascoThMain>{displayValue("targets", ValueType.Copy)}</VascoThMain>
           </VascoTr>
           <VascoTr>
-            <VascoTh scope="col" withHeadingBg>
+            <VascoTh scope="col" withHeadingStyles>
               {/*
                 For the first cell of the first row, text
                 should be visually hidden but remain accessible
@@ -64,9 +64,8 @@ export function TargetsTable({
                 <VascoTh
                   key={cellId}
                   scope="col"
-                  fontWeight="bold"
                   textAlign="end"
-                  withHeadingBg
+                  withHeadingStyles
                   withBorders={isQuarterly}
                 >
                   {displayValue(value, valueType)}
@@ -101,7 +100,7 @@ export function TargetsTable({
                     <VascoTd
                       key={id}
                       isEditable={isEditable}
-                      withHeadingBg={isQuarterly}
+                      withHeadingStyles={isQuarterly}
                       withBorders={isQuarterly}
                       textAlign="end"
                     >

@@ -3,7 +3,6 @@ import type * as CSS from "csstype";
 
 import {
   Input,
-  InputProps,
   Table,
   TableContainer,
   Tbody,
@@ -95,6 +94,7 @@ const cellSharedStyles = {
 
 const cellSharedHeadingStyles = {
   bgColor: "gray.50",
+  fontWeight: "bold",
 };
 
 const cellSharedHeadingBorders = {
@@ -106,19 +106,17 @@ const cellSharedHeadingBorders = {
 
 export function VascoTh({
   children,
-  fontWeight,
   scope,
   textAlign,
   tabIndex = 0,
-  withHeadingBg,
+  withHeadingStyles,
   withBorders,
   "aria-hidden": ariaHidden,
 }: PropsWithChildren<{
   scope?: "row" | "col";
-  fontWeight?: CSS.Property.FontWeight;
   textAlign?: CSS.Property.TextAlign;
   tabIndex?: number;
-  withHeadingBg?: boolean;
+  withHeadingStyles?: boolean;
   withBorders?: boolean;
   "aria-hidden"?: boolean | undefined;
 }>) {
@@ -139,11 +137,11 @@ export function VascoTh({
           position: "sticky",
           left: 0,
         },
-        fontWeight: fontWeight || "400",
+        fontWeight: "400",
         fontSize: "md",
         textTransform: "capitalize",
         letterSpacing: 0,
-        ...(withHeadingBg ? { ...cellSharedHeadingStyles } : {}),
+        ...(withHeadingStyles ? { ...cellSharedHeadingStyles } : {}),
         ...(withBorders ? { ...cellSharedHeadingBorders } : {}),
       }}
     >
@@ -155,14 +153,14 @@ export function VascoTh({
 export function VascoTd({
   children,
   isEditable,
-  withHeadingBg,
+  withHeadingStyles,
   withBorders,
   textAlign,
   tabIndex = 0,
   "aria-hidden": ariaHidden,
 }: PropsWithChildren<{
   isEditable?: boolean;
-  withHeadingBg?: boolean;
+  withHeadingStyles?: boolean;
   withBorders?: boolean;
   textAlign?: CSS.Property.TextAlign;
   tabIndex?: number;
@@ -187,7 +185,7 @@ export function VascoTd({
       aria-hidden={ariaHidden}
       sx={{
         ...cellSharedStyles,
-        ...(withHeadingBg ? { ...cellSharedHeadingStyles } : {}),
+        ...(withHeadingStyles ? { ...cellSharedHeadingStyles } : {}),
         ...(withBorders ? { ...cellSharedHeadingBorders } : {}),
       }}
     >
