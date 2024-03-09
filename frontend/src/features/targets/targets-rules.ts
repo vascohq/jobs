@@ -70,15 +70,25 @@ function updateMapFromNewEndingMRR(
   // Need to update the other values, derived from endingMRR update
   // First the beginningMRR for the next month
   // If next month available, update accordingly
-  const nextIndex = monthIndex + 1;
-  const nextMonthBeginningMRRCell = getCellFromMap(
+  let nextIndex = monthIndex + 1;
+  let nextMonthBeginningMRRCell = getCellFromMap(
     newTargetsMap,
     "beginningMRR",
     nextIndex
   );
 
-  // Is there a next month?
+  // If next month is is quarterly, skip.
+  if (nextMonthBeginningMRRCell.periodType === PeriodType.Quarterly) {
+    nextIndex++;
+    nextMonthBeginningMRRCell = getCellFromMap(
+      newTargetsMap,
+      "beginningMRR",
+      nextIndex
+    );
+  }
+
   if (nextMonthBeginningMRRCell) {
+    // Is there a next month?
     // Update the beginningMRR
     nextMonthBeginningMRRCell.value = endingMRRValue;
 
@@ -323,13 +333,19 @@ export function getQuarterlyEndingMRR(
   return quarterlyEndingMRR;
 }
 
-export function getQuarterlyTargets(monthlyTargets: MonthlyTargetMap) {
-  return quarterBeginningIndexes.map((quarterIndex) => {
-    const monthIndexes = getQuarterlyMonthIndexes(quarterIndex);
+export function getQuarterlyTargets(
+  monthlyTargets: MonthlyTargetMap,
+  initial?: boolean
+) {
+  // We need get the quarterly data, need to consider the
+  // offset created by the insertion of the quarter columns
+  return quarterBeginningIndexes.map((quarterIndex, offset) => {
+    const startIndex = quarterIndex + (initial ? 0 : offset);
+    const monthIndexes = getQuarterlyMonthIndexes(startIndex);
 
     const quarterlyBeginningMRR = getQuarterlyBeginningMRR(
       monthlyTargets,
-      quarterIndex
+      startIndex
     );
     const quarterlyNewBusinessMRR = getQuarterlyNewBusinessMRR(
       monthlyTargets,
@@ -405,7 +421,7 @@ export function updateQuarterlyTargets(
 ): MonthlyTargetMap {
   const newMonthlyTargetsMap = new Map(monthlyTargets);
 
-  const quarterlyTargets = getQuarterlyTargets(newMonthlyTargetsMap);
+  const quarterlyTargets = getQuarterlyTargets(newMonthlyTargetsMap, initial);
 
   quarterBeginningIndexes.forEach((monthIndex, quarterIndex) => {
     // To reach the end of the quarter we need to monthIndex + 3 + index
