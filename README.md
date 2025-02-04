@@ -12,9 +12,9 @@
 | --- | -------- | ----------------------- | ------------------------------------------------------------------- |
 | ♟️   | Backend  | Typescript, Node, tRPC  | [Start →](./backend)                                                |
 | 🧩   | Frontend | Typescript, Vite, React | [Start →](./frontend)                                               |
-| 🎨   | Design   | Figma, Design System    | [Start →](https://www.figma.com/community/file/1150045580326520430) |
+
 ## Sending your results
 
-Once you are done, send your results to someone from Vasco (e.g. [@rothlis](https://github.com/rothlis)) or at career@vascohq.com.
+Once you are done, send your results to someone from Vasco (e.g. [@rothlis](https://github.com/rothlis)) or at jobs@vasco.app.
 
-For the engineering challenges, you can send your Github project link. You can also zip your directory and send it via email, don't forget to include your `.git` folder.
+You can send your Github project link. You can also zip your directory and send it via email, don't forget to include your `.git` folder.
