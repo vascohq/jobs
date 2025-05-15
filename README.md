@@ -8,10 +8,11 @@
 
 ## Getting started
 
-|     | Profile  | Stack                   | Test                                                                |
-| --- | -------- | ----------------------- | ------------------------------------------------------------------- |
-| ♟️   | Backend  | Typescript, Node, tRPC  | [Start →](./backend)                                                |
-| 🧩   | Frontend | Typescript, Vite, React | [Start →](./frontend)                                               |
+|     | Profile     | Stack                   | Test                     |
+| --- | ----------- | ----------------------- | ------------------------ |
+| ♟️  | Backend     | Typescript, Node, tRPC  | [Start →](./backend)     |
+| 📊  | Backend SQL | SQL                     | [Start →](./backend-sql) |
+| 🧩  | Frontend    | Typescript, Vite, React | [Start →](./frontend)    |
 
 ## Sending your results
 
