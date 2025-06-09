@@ -1,10 +1,9 @@
-<p align="center">
-  <img src="https://raw.githubusercontent.com/vascohq/.github/main/profile/github-jobs-banner.png" width="150" alt="Vasco" align="center" />
-</p>
-<h1 align="center">Vasco Challenges</h1>
-<br />
-<p align="center">Want to join our product team? Complete one of the code challenges for us to look at!</p>
-<br />
+<img src="https://raw.githubusercontent.com/vascohq/.github/main/profile/github-banner-drift.png" alt="Vasco" align="center" />
+
+# Challenges
+
+Want to join our product team? Complete one of the code challenges for us to look at!
+
 
 ## Getting started
 
