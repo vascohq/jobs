@@ -1,17 +1,31 @@
 # 📊 Vasco Backend SQL Challenge
 
-Data are at the center of the Vasco Solution, we use them to help our users on different aspects, such as diagnosis, execution, and plan.
+Data is at the center of the Vasco solution. We use it to help our users across different aspects of their business: diagnosis, execution, and planning.
 
-One key aspect of a sales representative’s role is engaging with prospects through what we call "Activities".
-These activities encompass every form of client interaction—meetings, calls, emails, and more.
+One key aspect of a sales representative's role is engaging with prospects through what we call "Activities." These activities encompass every form of client interaction—meetings, calls, emails, demos, and more.
 
 There is a strong correlation between the number of activities performed over time and the successful conversion of prospects.
 
 With that in mind, Vasco enables you to define a customized Activities Playbook that guides your sales reps on which actions to take and when—helping them stay consistent and effective throughout the sales process.
 
-### Your challenge
+## Getting Started
+
+### Setup
+
+1. Navigate to the backend-sql directory:
+   ```zsh
+   cd backend-sql
+   ```
+
+2. Load the DuckDB database from `data/dataset.duckdb.db`
+
+3. Write SQL queries to solve the challenge (see details below)
+
+## Your Challenge
 
 We have compiled a list of activities carried out in January 2025 for a selected group of prospects, along with the corresponding reference playbook.
+
+### Data Schema
 
 #### Activities
 
@@ -22,7 +36,7 @@ We have compiled a list of activities carried out in January 2025 for a selected
 | prospect_id | ID of the prospect         |
 | date        | Date of the activity       |
 
-#### Prospect
+#### Prospects
 
 | column  | description                                |
 | ------- | ------------------------------------------ |
@@ -30,36 +44,35 @@ We have compiled a list of activities carried out in January 2025 for a selected
 | name    | Company name                               |
 | date_in | Date the prospect entered the sales funnel |
 
-#### Playbook checkpoints
+#### Playbook Checkpoints
 
 | column           | description                                           |
 | ---------------- | ----------------------------------------------------- |
 | day              | Number of days a prospect spent in the funnel         |
 | cumulated_target | Number of cumulated activities expected at that point |
 
-1. Identify Daily Playbook Violations (January 2025)
+### Task 1: Identify Daily Playbook Violations (January 2025)
 
-   A prospect is considered in violation if they haven't received the required number of activities by a given day.
+A prospect is considered in violation if they haven't received the required number of activities by a given day.
 
-   However, if the shortfall is addressed later—for example, if the prospect was in violation on January 15 but receives sufficient attention before January 31—they are no longer considered in violation as of the end of the month.
+**Important:** If the shortfall is addressed later—for example, if a prospect was in violation on January 15 but receives sufficient attention before January 31—they are no longer considered in violation as of the end of the month.
 
-   To keep things straightforward, the playbook has been structured with one checkpoint per day throughout the month of January.
+To keep things straightforward, the playbook has been structured with one checkpoint per day throughout the month of January.
 
-2. Calculate the Daily Adherence Score
+### Task 2: Calculate the Daily Adherence Score
 
-   To promote timely engagement, we introduce the concept of an Adherence Score.
+To promote timely engagement, we introduce the concept of an Adherence Score.
 
-   This score reflects how closely the sales rep's actions align with the playbook timeline.
-   Prospects who experience delayed or insufficient activity are at greater risk of being lost.
+This score reflects how closely the sales rep's actions align with the playbook timeline. Prospects who experience delayed or insufficient activity are at greater risk of being lost.
 
-   To quantify this risk and incentivize proper timing, each missed checkpoint results in a 5% penalty to the prospect’s adherence score.
-   This encourages consistent, on-schedule follow-ups throughout the sales cycle.
+To quantify this risk and incentivize proper timing, each missed checkpoint results in a 5% penalty to the prospect's adherence score. This encourages consistent, on-schedule follow-ups throughout the sales cycle.
 
-Score formula for a single prospect: $\min\left(\frac{\text{cumulatedActuals}}{\text{cumulatedTarget}},\ 1\right) \cdot \left(1 - 0.05 \cdot \text{missedCheckpointCount}\right)$
+**Score formula for a single prospect:**
+$$\min\left(\frac{\text{cumulatedActuals}}{\text{cumulatedTarget}},\ 1\right) \cdot \left(1 - 0.05 \cdot \text{missedCheckpointCount}\right)$$
 
-For now we can use a simple average function to calculate the adherence score for all prospects in the funnel per day.
+For now, use a simple average function to calculate the adherence score for all prospects in the funnel per day.
 
-Expected results for **1/** and **2/**
+**Expected results for Tasks 1 and 2:**
 
 | Date       | # Prospects in Violation | # Prospects in Funnel | Average Adherence Score |
 | ---------- | ------------------------ | --------------------- | ----------------------- |
@@ -95,11 +108,13 @@ Expected results for **1/** and **2/**
 | 2025-01-30 | 10                       | 30                    | 56%                     |
 | 2025-01-31 | 10                       | 31                    | 58%                     |
 
-#### Data
+## Solution Guidelines
 
-You need to load the DuckDB database [dataset.duckdb.db](./data) and write the required SQL to solve the challenge.
+At Vasco, we move quickly and refine our solutions through multiple iterations. With that in mind, your solution should be:
 
-At Vasco, we move quickly and refine our solutions through multiple iterations. With that in mind, the solution you propose should be easy to maintain and adaptable for future improvements.
+- Easy to maintain
+- Adaptable for future improvements
+- Well-documented
 
 Adding unit tests to your solution would significantly enhance its accuracy and reliability.
 

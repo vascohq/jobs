@@ -2,37 +2,42 @@
 
 Welcome to Vasco's backend challenge. You are tasked to implement a few [tRPC](https://trpc.io/) procedures around Vasco's business requirements, although simplified. The API will be consumed in a revenue forecast UI similar to a Google Sheet.
 
-## Instructions
+## Getting Started
 
-First, clone this repo (do **not** fork it).
+### Setup
 
-```zsh
-git clone https://github.com/vascohq/jobs
-cd backend
-```
+1. Clone this repository (do **not** fork it):
+   ```zsh
+   git clone https://github.com/vascohq/jobs
+   cd backend
+   ```
 
-Then install all required dependencies:
+2. Install all required dependencies:
+   ```zsh
+   yarn install
+   ```
 
-```zsh
-yarn install
-```
+### Solving the Challenge
 
-Solve the levels in ascending order by writing code that makes each `level.test.ts` pass.
+The challenge is divided into three levels that increase in complexity. Solve them in ascending order by writing code that makes each `level.test.ts` pass.
 
+To test a level:
 ```zsh
 yarn workspace level1 test
+yarn workspace level2 test
+yarn workspace level3 test
 ```
 
-When you are done, see how to submit your challenge on the main [README](../README.md#sending-your-results).
+When you are done, see how to submit your solution in the main [README](../README.md#submitting-your-solution).
 
-## Pointers
+## Tips
 
-The challenge is separated in levels and they become more complex over time, so you will probably have to re-use some code and adapt it to the new requirements.
+The challenge is separated into levels that become more complex over time. You'll likely need to reuse and adapt code from previous levels to meet new requirements.
 
-- A good way to solve this is by writing [Clean Code](https://gist.github.com/wojteklu/73c6914cc446146b8b533c0988cf8d29), adding new layers of abstraction when they become necessary and possibly write tests so you don't break what you have already done.
-- Don't hesitate to write shameless code at first, and then refactor it in the next levels.
-- For higher levels we are interested in seeing code that is clean, extensible and robust, so don't overlook edge cases, use exceptions where needed.
-- Organize code and files as it was a big production application
+- Write [Clean Code](https://gist.github.com/wojteklu/73c6914cc446146b8b533c0988cf8d29), adding new layers of abstraction when they become necessary. Consider writing tests to ensure you don't break existing functionality.
+- Don't hesitate to write quick, working code at first, then refactor it in subsequent levels.
+- For higher levels, we're interested in seeing code that is clean, extensible, and robust. Don't overlook edge cases—use exceptions where needed.
+- Organize your code and files as if this were a production application.
 
 ## Use of AI Development Tools
 
@@ -46,4 +51,4 @@ Be ready to explain your choices and adapt your code **without AI** in the live 
 
 ## Data
 
-All levels shares the same data: `data/targets.json`. Use it as you see fit to complete each level.
+All levels share the same data file: `data/targets.json`. Use it as you see fit to complete each level.

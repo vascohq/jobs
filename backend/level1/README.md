@@ -1,8 +1,8 @@
 # Level 1
 
-## Targets per month
+## Task
 
-You are tasked to implement a procedure call to retrieve the targets for a given month.
+Implement a tRPC procedure to retrieve revenue targets for a given month.
 
 ### Example
 
@@ -24,6 +24,6 @@ curl --request GET \
 
 ### Requirements
 
-- Inputs must be valid (e.g. month `13` is impossible)
-- Rates must be formatted as floats (e.g. `1` => `0.01`)
-- Months without data returns an empty object
+- Input validation: month must be between 1-12 (e.g., month `13` is invalid)
+- Rate formatting: rates must be formatted as floats (e.g., `1` in the data should be returned as `0.01`)
+- Missing data: months without data should return an empty object `{}`

@@ -1,10 +1,8 @@
 # Level 3
 
-## Targets per team
+## Task
 
-Our sales team is split into two groups: Acquisition and Expansion.
-
-You are tasked to add each team target to the `perMonth` and `perQuarter` procedures.
+Extend the `perMonth` and `perQuarter` procedures to include team-specific targets. Our sales team is split into two groups: **Acquisition** and **Expansion**.
 
 ### Example
 
@@ -29,9 +27,9 @@ curl --request GET \
 
 ### Requirements
 
-- All the requirements of previous levels
-- Add teams target to `perMonth` and `perQuarter` procedures
-- Here are the monthly formulas for each team:
+- All requirements from previous levels apply
+- Add team targets (`acquisitionTarget` and `expansionTarget`) to both `perMonth` and `perQuarter` procedures
+- Use the following monthly formulas for each team:
 
 ```math
 acquisitionTarget = recurringRevenue(m) - recurringRevenue(m-1)
@@ -45,7 +43,7 @@ expansionTarget = recurringRevenue(m-1) * (1 - netRetentionRate)
 netRetentionRate =  1 - downgradeRate + upgradeRate - churnRate
 ```
 
-> `(m - 1)` means the previous month value
+> **Note:** `(m - 1)` refers to the previous month's value.
 
-- Quarterly values are simply the sum of the quarter's months
-- Assume that the recurring revenue of December 2021 is `100000`
+- **Quarterly calculation:** Quarterly values are the sum of the three months in the quarter
+- **Assumption:** The recurring revenue for December 2021 is `100000`
