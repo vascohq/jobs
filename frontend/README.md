@@ -1,6 +1,6 @@
 <img src="README.jpg" alt="README" />
 
-# Frontend Challenge
+# 🧩 Vasco Frontend Challenge
 
 Welcome to Vasco's frontend challenge. You are tasked with visualizing an organization's targets per month and quarter. The challenge is divided into multiple levels, increasing in complexity. You can install any library you see fit.
 
@@ -92,3 +92,13 @@ In the RFC, please specifically include your proposed solution for:
 - How the developer would use the formulas.
 - We expect pseudo-code, not a full implementation.
 - Include the pros and cons of your solution.
+
+## Use of AI Development Tools
+
+You're encouraged to use AI tools like Claude Code or Cursor to move faster at home. At Vasco, we care about code quality, clarity, and reasoning — not how you get there.
+
+> Use AI to accelerate your work, but ensure the result reflects your own understanding and craftsmanship. We'll test that live.
+
+Be ready to explain your choices and adapt your code **without AI** in the live session.
+
+**Optional:** We're curious how you used AI while working on this challenge — what helped, what didn't. If you'd like, keep your prompts or spec files so we can discuss them during the live interview.

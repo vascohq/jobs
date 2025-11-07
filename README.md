@@ -10,13 +10,14 @@ Vasco is a revenue platform for B2B teams that turns messy data into clear, AI-d
 
 ## Available Challenges
 
-We have three different challenges available, each focusing on different aspects of software development:
+We have four different challenges available, each focusing on different aspects of software development:
 
 | Challenge | Profile | Tech Stack | Description | Link |
 |-----------|---------|------------|-------------|------|
 | ♟️ | Backend | TypeScript, Node.js, tRPC | Build a robust backend API with type safety and efficient data handling | [Start →](./backend) |
 | 📊 | Backend SQL | SQL | Demonstrate your database design and query optimization skills | [Start →](./backend-sql) |
 | 🧩 | Frontend | TypeScript, Vite, React | Create a modern, responsive user interface with great UX | [Start →](./frontend) |
+| 🤖 | AI | TypeScript, Python, MCP, ADK | Implement features for an AI assistant that provides revenue insights and generates executive reports | [Start →](./ai) |
 
 ## How to Get Started
 
@@ -34,6 +35,16 @@ We have three different challenges available, each focusing on different aspects
 - Performance considerations
 - Attention to detail
 - Creative problem-solving
+
+## Use of AI Development Tools
+
+You're encouraged to use AI tools like Claude Code or Cursor to move faster at home. At Vasco, we care about code quality, clarity, and reasoning — not how you get there.
+
+> Use AI to accelerate your work, but ensure the result reflects your own understanding and craftsmanship. We'll test that live.
+
+Be ready to explain your choices and adapt your code **without AI** in the live session.
+
+**Optional:** We're curious how you used AI while working on this challenge — what helped, what didn't. If you'd like, keep your prompts or spec files so we can discuss them during the live interview.
 
 ## Submitting Your Solution
 
