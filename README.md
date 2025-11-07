@@ -12,12 +12,12 @@ Vasco is a revenue platform for B2B teams that turns messy data into clear, AI-d
 
 We have four different challenges available, each focusing on different aspects of software development:
 
-| Challenge | Profile | Tech Stack | Description | Link |
-|-----------|---------|------------|-------------|------|
-| ♟️ | Backend | TypeScript, Node.js, tRPC | Build a robust backend API with type safety and efficient data handling | [Start →](./backend) |
-| 📊 | Backend SQL | SQL | Demonstrate your database design and query optimization skills | [Start →](./backend-sql) |
-| 🧩 | Frontend | TypeScript, Vite, React | Create a modern, responsive user interface with great UX | [Start →](./frontend) |
-| 🤖 | AI | TypeScript, Python, MCP, ADK | Implement features for an AI assistant that provides revenue insights and generates executive reports | [Start →](./ai) |
+| Challenge | Tech Stack | Description | Link |
+|-----------|------------|-------------|------|
+| ♟️ Backend | TypeScript, Node.js, tRPC | Build a robust backend API with type safety and efficient data handling | [Start →](./backend) |
+| 📊 Backend SQL | SQL | Demonstrate your database design and query optimization skills | [Start →](./backend-sql) |
+| 🧩 Frontend | TypeScript, Vite, React | Create a modern, responsive user interface with great UX | [Start →](./frontend) |
+| 🤖 AI | TypeScript, Python, MCP, ADK | Implement features for an AI assistant that provides revenue insights and generates executive reports | [Start →](./ai) |
 
 ## How to Get Started
 

@@ -2,21 +2,48 @@
 
 # 🧩 Vasco Frontend Challenge
 
-Welcome to Vasco's frontend challenge. You are tasked with visualizing an organization's targets per month and quarter. The challenge is divided into multiple levels, increasing in complexity. You can install any library you see fit.
+Welcome to Vasco's frontend challenge. You are tasked with visualizing an organization's revenue targets per month and quarter. The challenge is divided into multiple levels, increasing in complexity. You can install any library you see fit.
+
+## Getting Started
+
+### Setup
+
+1. Navigate to the frontend directory:
+   ```zsh
+   cd frontend
+   ```
+
+2. Install dependencies:
+   ```zsh
+   yarn install
+   ```
+
+3. Start the development server:
+   ```zsh
+   yarn dev
+   ```
 
 ## Level 1
 
-We expect a static version of the table shown in the picture (only months, no quarters). The first column should be sticky, and the table should be scrollable horizontally.
+Build a static version of the table shown in the image (months only, no quarters). 
 
-Bonus points if it respects our design system and adapts to different screen sizes. Be mindful of the time; we want to see level 4.
+**Requirements:**
+- The first column should be sticky (fixed position)
+- The table should be horizontally scrollable
+- **Bonus:** Respect our design system and adapt to different screen sizes
+
+> **Note:** Be mindful of time—we want to see Level 4 completed.
 
 ## Level 2
 
-We expect the data of the table to be fetched from an API. The data is available in the `data` folder.
+Fetch the table data from an API. The data files are available in the `data` folder:
+- `monthlyTargets.json`
+- `quarterlyTargets.json`
+- `yearlyTargets.json`
 
 ## Level 3
 
-We expect the blue cells to be editable, and all other cells should recalculate accordingly. Here are the formulas to use:
+Make the blue cells editable. When edited, all dependent cells should recalculate automatically using the following formulas:
 
 ```math
 beginningMRR = endingMRR(m-1)
@@ -36,12 +63,12 @@ expansionMRR = beginningMRR * expansionRate
 
 ### Notes
 
-- The first month's beginningMRR is always the one from the API (i.e. $80,000)
-- The notation `m-1` means the previous month
+- The first month's `beginningMRR` is always taken from the API (i.e., $80,000)
+- The notation `m-1` refers to the previous month
 
 ## Level 4
 
-We expect to now see quarter columns. The data should come from the following formulas:
+Add quarter columns to the table. Calculate quarterly values using the following formulas:
 
 ```math
 quarterlyBeginningMRR = beginningMRR(m1)
@@ -79,19 +106,21 @@ quarterlyAverageBeginningMRR = (beginningMRR(m1) + beginningMRR(m2) + beginningM
 
 ### Notes
 
-- The notation `m1` means the first month of the quarter, `m2` the second month and `m3` the third month.
+- The notation `m1` refers to the first month of the quarter, `m2` to the second month, and `m3` to the third month.
 
-## Level 5
+## Level 5 (Optional)
 
-Do you still have some time? You are tasked with writing an RFC to technically shape a proposed change. The change involves the requirements to make the formulas calculation reusable also in the backend. For example, if the backend wants to calculate the Churn Rate, it should be able to use the same formulas as the frontend.
+If you have extra time, write an RFC (Request for Comments) to technically design a solution for making formula calculations reusable across both frontend and backend.
 
-In the RFC, please specifically include your proposed solution for:
+**Context:** The backend should be able to use the same formulas as the frontend. For example, if the backend needs to calculate the Churn Rate, it should use identical logic.
 
-- Having isomorphic formulas.
-- How to add new formulas overtime.
-- How the developer would use the formulas.
-- We expect pseudo-code, not a full implementation.
-- Include the pros and cons of your solution.
+**Your RFC should include:**
+
+- A proposed solution for isomorphic formulas (shared between frontend and backend)
+- How to add new formulas over time
+- How developers would use the formulas
+- Pseudo-code (not a full implementation)
+- Pros and cons of your proposed solution
 
 ## Use of AI Development Tools
 

@@ -1,16 +1,14 @@
 # Level 3
 
-## Targets per teams
+## Task
 
-Our sales team is split in two group: Acquisition and Expansion.
-
-You are task to add each team target to the `perMonth` and `perQuarter` procedures.
+Extend the `perMonth` and `perQuarter` procedures to include team-specific targets. Our sales team is split into two groups: **Acquisition** and **Expansion**.
 
 ### Example
 
 ```bash
 curl --request GET \
-  --url http://localhost:2021/trpc/targets.perQuarter?input=%7B%quarter%22:2,%22year%22:2022%7D
+  --url http://localhost:2021/trpc/targets.perQuarter?input=%7B%22quarter%22:2,%22year%22:2022%7D
 ```
 
 ```diff
@@ -29,9 +27,9 @@ curl --request GET \
 
 ### Requirements
 
-- All the requirements of previous levels
-- Add teams target to `perMonth` and `perQuarter` procedures
-- Here are the monthly formulas for each team:
+- All requirements from previous levels apply
+- Add team targets (`acquisitionTarget` and `expansionTarget`) to both `perMonth` and `perQuarter` procedures
+- Use the following monthly formulas for each team:
 
 ```math
 acquisitionTarget = recurringRevenue(m) - recurringRevenue(m-1)
@@ -45,7 +43,7 @@ expansionTarget = recurringRevenue(m-1) * (1 - netRetentionRate)
 netRetentionRate =  1 - downgradeRate + upgradeRate - churnRate
 ```
 
-> `(m - 1)` means the previous month value
+> **Note:** `(m - 1)` refers to the previous month's value.
 
-- Quarterly values are simply the sum of the quarter's months
-- Assume that the recurring revenue of December 2021 is `100000`
+- **Quarterly calculation:** Quarterly values are the sum of the three months in the quarter
+- **Assumption:** The recurring revenue for December 2021 is `100000`

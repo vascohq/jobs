@@ -1,14 +1,14 @@
 # Level 2
 
-## Targets per quarter
+## Task
 
-You are task to implement another procedure call to provide targets now per quarter.
+Implement a tRPC procedure to retrieve revenue targets for a given quarter.
 
 ### Example
 
 ```bash
 curl --request GET \
-  --url http://localhost:2021/trpc/targets.perQuarter?input=%7B%quarter%22:2,%22year%22:2022%7D
+  --url http://localhost:2021/trpc/targets.perQuarter?input=%7B%22quarter%22:2,%22year%22:2022%7D
 ```
 
 ```json
@@ -24,9 +24,9 @@ curl --request GET \
 
 ### Requirements
 
-- All the requirements of previous levels
-- The `recurringRevenue` should be equal to the last month of the quarter
-- All rates should be calculated like so:
+- All requirements from Level 1 apply
+- The `recurringRevenue` should equal the recurring revenue of the last month in the quarter
+- All rates should be calculated using the following formulas:
 
 ```math
 churnQuarterlyRate = churnQuarterlyAmount / averageQuarterlyRecurringRevenue
@@ -40,6 +40,6 @@ churnQuarterlyAmount = recurringRevenue(m1-1) * churnRate(m1) + recurringRevenue
 averageQuarterlyRecurringRevenue = (recurringRevenue(m1) + recurringRevenue(m2) + recurringRevenue(m3)) / 3
 ```
 
-> `(m1 - 1)` means the month previous to the first month of the quarter
+> **Note:** `(m1 - 1)` refers to the month before the first month of the quarter.
 
-- Assume that the recurring revenue of December 2021 is `100000`
+- **Assumption:** The recurring revenue for December 2021 is `100000`
