@@ -1,4 +1,4 @@
-# Coding Challenge
+# 🤖 Vasco AI Challenge
 
 ## Overview
 

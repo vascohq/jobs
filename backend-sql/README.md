@@ -1,4 +1,4 @@
-## Activities playbook challenge
+# 📊 Vasco Backend SQL Challenge
 
 Data are at the center of the Vasco Solution, we use them to help our users on different aspects, such as diagnosis, execution, and plan.
 
@@ -102,5 +102,15 @@ You need to load the DuckDB database [dataset.duckdb.db](./data) and write the r
 At Vasco, we move quickly and refine our solutions through multiple iterations. With that in mind, the solution you propose should be easy to maintain and adaptable for future improvements.
 
 Adding unit tests to your solution would significantly enhance its accuracy and reliability.
+
+## Use of AI Development Tools
+
+You're encouraged to use AI tools like Claude Code or Cursor to move faster at home. At Vasco, we care about code quality, clarity, and reasoning — not how you get there.
+
+> Use AI to accelerate your work, but ensure the result reflects your own understanding and craftsmanship. We'll test that live.
+
+Be ready to explain your choices and adapt your code **without AI** in the live session.
+
+**Optional:** We're curious how you used AI while working on this challenge — what helped, what didn't. If you'd like, keep your prompts or spec files so we can discuss them during the live interview.
 
 > <small>**Note for reviewers**: the SQL solving this challenge can be found on 1Password</small>
