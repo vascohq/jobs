@@ -50,14 +50,13 @@ Be ready to explain your choices and adapt your code **without AI** in the live 
 
 Once you've completed your challenge, you can submit it in one of two ways:
 
-1. **GitHub Repository**
-   - Create a new repository with your solution
-   - Make sure to include the `.git` folder
-   - Share the repository link with us
+### GitHub Repository
 
-2. **Email Submission**
-   - Zip your solution directory (including the `.git` folder)
-   - Send it to jobs@vasco.app
+1. Create a new repository with your solution
+2. Make sure to include the `.git` folder
+3. Share the repository link with us
+
+**Submission:** Please submit the repo via the Ashby link that will be provided to you by the Talent team.
 
 Please include:
 - Your name and contact information
@@ -67,10 +66,10 @@ Please include:
 
 ## Next Steps
 
-After submitting your solution, our team will review your code and get back to you within a week. If we're impressed with your work, we'll invite you for a technical interview to discuss your solution and explore potential opportunities at Vasco.
+After submitting your solution, our team will review your code and get back to you within a 1 or 2 days. If we're impressed with your work, we'll invite you for a technical interview to discuss your solution and explore potential opportunities at Vasco.
 
 ## Questions?
 
-If you have any questions about the challenges or the application process, feel free to reach out to us at jobs@vasco.app or contact [@rothlis](https://github.com/rothlis) directly.
+If you have any questions about the challenges or the application process, feel free to reach out to our Talent team.
 
 Good luck! 🚀
