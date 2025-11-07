@@ -2,7 +2,7 @@
 
 ## Targets per month
 
-You are task to implement a procedure call to retrieve the targets for a given month.
+You are tasked to implement a procedure call to retrieve the targets for a given month.
 
 ### Example
 

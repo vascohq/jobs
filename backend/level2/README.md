@@ -2,13 +2,13 @@
 
 ## Targets per quarter
 
-You are task to implement another procedure call to provide targets now per quarter.
+You are tasked to implement another procedure call to provide targets now per quarter.
 
 ### Example
 
 ```bash
 curl --request GET \
-  --url http://localhost:2021/trpc/targets.perQuarter?input=%7B%quarter%22:2,%22year%22:2022%7D
+  --url http://localhost:2021/trpc/targets.perQuarter?input=%7B%22quarter%22:2,%22year%22:2022%7D
 ```
 
 ```json

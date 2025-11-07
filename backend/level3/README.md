@@ -1,16 +1,16 @@
 # Level 3
 
-## Targets per teams
+## Targets per team
 
-Our sales team is split in two group: Acquisition and Expansion.
+Our sales team is split into two groups: Acquisition and Expansion.
 
-You are task to add each team target to the `perMonth` and `perQuarter` procedures.
+You are tasked to add each team target to the `perMonth` and `perQuarter` procedures.
 
 ### Example
 
 ```bash
 curl --request GET \
-  --url http://localhost:2021/trpc/targets.perQuarter?input=%7B%quarter%22:2,%22year%22:2022%7D
+  --url http://localhost:2021/trpc/targets.perQuarter?input=%7B%22quarter%22:2,%22year%22:2022%7D
 ```
 
 ```diff
