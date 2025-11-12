@@ -32,6 +32,10 @@ npm run mcp-inspector
 
 #### 2. Set up the ADK Server
 
+**Requirements:**
+- Python 3.9 or later
+- `pip` for installing packages
+
 ```zsh
 cd adk
 python3 -m venv .venv
@@ -40,7 +44,7 @@ pip install -r requirements.txt
 cp ./main/.env.example ./main/.env
 ```
 
-Add a Gemini API key to the `.env` file:
+Create a free tier Gemini API key at [https://aistudio.google.com/api-keys](https://aistudio.google.com/api-keys) and add it to the `.env` file:
 ```
 GOOGLE_API_KEY=your_api_key_here
 ```
