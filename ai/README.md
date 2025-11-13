@@ -101,8 +101,11 @@ The assistant must correctly answer fiscal-period questions such as "What was my
 - Do not rely on a constant or hard-coded fiscal-year start month
 - If the fiscal-year start month is unknown, ask the user directly (e.g., "Which month does your fiscal year start? 1 = January … 12 = December")
 - Once provided, remember and persist that preference for subsequent interactions and new conversations
-- Using the provided month, translate fiscal quarters to the correct calendar ranges (for example, if the fiscal year starts in April → Q2 FY2024 = July–September 2024)
-- Compute ARR at the end of that fiscal period using the same cumulative logic as Capability 1
+- Using the provided month, translate fiscal quarters to the correct calendar ranges (for example, if the fiscal year starts in April → Q2 FY2025 = July–September 2024, see note below)
+- Compute ARR at the **end of that fiscal period** using the same cumulative logic as Capability 1. (E.g. ARR for Q2 2024 is the ARR at the end of Q2 2024.)
+
+> [!NOTE]  
+> Fiscal years are numbered according to the year they *end*. So if FY starts in January, FY2024 is Jan to Dec 2024. But if it starts in February, then FY2024 is Feb 2023 to Jan 2024.
 
 ### Capability 3: Generate a Reasoned Executive Report with Voice and Judgment
 
