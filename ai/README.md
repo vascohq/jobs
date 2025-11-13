@@ -74,7 +74,7 @@ Be ready to explain your choices and adapt your code **without AI** in the live 
 
 ## Your Tasks
 
-You need to implement three capabilities for the AI assistant:
+You need to implement the three capabilities below for the AI assistant. Each can involve, at your choice, updating the MCP, the ADK assistant, or both.
 
 ### Capability 1: Understand and Compute ARR from New MRR
 
